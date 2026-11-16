@@ -1,0 +1,102 @@
+[
+  {
+    "change_id": "SC01",
+    "source": "crm.customers",
+    "change_type": "rename",
+    "column_before": "email",
+    "column_after": "email_address",
+    "type_before": "string",
+    "type_after": "string",
+    "description": "email \u2192 email_address"
+  },
+  {
+    "change_id": "SC02",
+    "source": "crm.customers",
+    "change_type": "rename",
+    "column_before": "region_code",
+    "column_after": "region",
+    "type_before": "string",
+    "type_after": "string",
+    "description": "region_code \u2192 region"
+  },
+  {
+    "change_id": "SC03",
+    "source": "erp.orders",
+    "change_type": "drop",
+    "column_before": "discount_amount",
+    "column_after": null,
+    "type_before": "decimal(18,2)",
+    "type_after": null,
+    "description": "discount_amount dropped"
+  },
+  {
+    "change_id": "SC04",
+    "source": "erp.orders",
+    "change_type": "drop",
+    "column_before": "ship_date",
+    "column_after": null,
+    "type_before": "date",
+    "type_after": null,
+    "description": "ship_date dropped"
+  },
+  {
+    "change_id": "SC05",
+    "source": "erp.order_lines",
+    "change_type": "type change",
+    "column_before": "unit_price",
+    "column_after": "unit_price",
+    "type_before": "decimal(18,2)",
+    "type_after": "varchar(20)",
+    "description": "unit_price: decimal(18,2) \u2192 varchar(20)"
+  },
+  {
+    "change_id": "SC06",
+    "source": "erp.products",
+    "change_type": "add",
+    "column_before": null,
+    "column_after": "brand",
+    "type_before": null,
+    "type_after": "varchar(100)",
+    "description": "brand added"
+  },
+  {
+    "change_id": "SC07",
+    "source": "crm.customers",
+    "change_type": "add",
+    "column_before": null,
+    "column_after": "loyalty_tier",
+    "type_before": null,
+    "type_after": "string",
+    "description": "loyalty_tier added"
+  },
+  {
+    "change_id": "SC08",
+    "source": "erp.orders",
+    "change_type": "type change",
+    "column_before": "total_amount",
+    "column_after": "total_amount",
+    "type_before": "decimal(18,2)",
+    "type_after": "decimal(20,4)",
+    "description": "total_amount: decimal(18,2) \u2192 decimal(20,4)"
+  },
+  {
+    "change_id": "SC09",
+    "source": "erp.products",
+    "change_type": "rename",
+    "column_before": "cost_price",
+    "column_after": "standard_cost",
+    "type_before": "decimal(18,2)",
+    "type_after": "decimal(18,2)",
+    "description": "cost_price \u2192 standard_cost"
+  },
+  {
+    "change_id": "SC10",
+    "source": "crm.customers",
+    "change_type": "type change",
+    "column_before": "is_active",
+    "column_after": "is_active",
+    "type_before": "boolean",
+    "type_after": "string",
+    "description": "is_active: boolean \u2192 string"
+  }
+]

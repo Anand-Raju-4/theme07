@@ -1,0 +1,2299 @@
+{
+  "nodes": [
+    {
+      "id": "lakehouse_table:bronze.crm_customers",
+      "name": "bronze.crm_customers",
+      "type": "lakehouse_table",
+      "metadata": {
+        "layer": "bronze"
+      }
+    },
+    {
+      "id": "lakehouse_table:bronze.erp_order_lines",
+      "name": "bronze.erp_order_lines",
+      "type": "lakehouse_table",
+      "metadata": {
+        "layer": "bronze"
+      }
+    },
+    {
+      "id": "lakehouse_table:bronze.erp_orders",
+      "name": "bronze.erp_orders",
+      "type": "lakehouse_table",
+      "metadata": {
+        "layer": "bronze"
+      }
+    },
+    {
+      "id": "lakehouse_table:bronze.erp_products",
+      "name": "bronze.erp_products",
+      "type": "lakehouse_table",
+      "metadata": {
+        "layer": "bronze"
+      }
+    },
+    {
+      "id": "lakehouse_table:gold.dim_customer",
+      "name": "gold.dim_customer",
+      "type": "lakehouse_table",
+      "metadata": {
+        "layer": "gold"
+      }
+    },
+    {
+      "id": "lakehouse_table:gold.dim_product",
+      "name": "gold.dim_product",
+      "type": "lakehouse_table",
+      "metadata": {
+        "layer": "gold"
+      }
+    },
+    {
+      "id": "lakehouse_table:gold.fact_sales",
+      "name": "gold.fact_sales",
+      "type": "lakehouse_table",
+      "metadata": {
+        "layer": "gold"
+      }
+    },
+    {
+      "id": "lakehouse_table:silver.customers",
+      "name": "silver.customers",
+      "type": "lakehouse_table",
+      "metadata": {}
+    },
+    {
+      "id": "lakehouse_table:silver.order_lines",
+      "name": "silver.order_lines",
+      "type": "lakehouse_table",
+      "metadata": {}
+    },
+    {
+      "id": "lakehouse_table:silver.orders",
+      "name": "silver.orders",
+      "type": "lakehouse_table",
+      "metadata": {}
+    },
+    {
+      "id": "measure:Active Customers",
+      "name": "Active Customers",
+      "type": "measure",
+      "metadata": {
+        "expression": "CALCULATE ( DISTINCTCOUNT ( dim_customer[customer_id] ), dim_customer[is_active] = TRUE () )"
+      }
+    },
+    {
+      "id": "measure:Cost",
+      "name": "Cost",
+      "type": "measure",
+      "metadata": {
+        "expression": "SUM ( fact_sales[cost_amount] )"
+      }
+    },
+    {
+      "id": "measure:Margin",
+      "name": "Margin",
+      "type": "measure",
+      "metadata": {
+        "expression": "[Net Sales] - [Cost]"
+      }
+    },
+    {
+      "id": "measure:Margin %",
+      "name": "Margin %",
+      "type": "measure",
+      "metadata": {
+        "expression": "DIVIDE ( [Margin], [Net Sales] )"
+      }
+    },
+    {
+      "id": "measure:Net Sales",
+      "name": "Net Sales",
+      "type": "measure",
+      "metadata": {
+        "expression": "SUM ( fact_sales[net_amount] )"
+      }
+    },
+    {
+      "id": "notebook:nb01_bronze_ingest",
+      "name": "nb01_bronze_ingest",
+      "type": "notebook",
+      "metadata": {
+        "path": "C:/Users/AnandRaju/SDIA/starter_kit/project/notebooks/nb01_bronze_ingest.py"
+      }
+    },
+    {
+      "id": "notebook:nb02_silver_customers",
+      "name": "nb02_silver_customers",
+      "type": "notebook",
+      "metadata": {
+        "path": "C:/Users/AnandRaju/SDIA/starter_kit/project/notebooks/nb02_silver_customers.py"
+      }
+    },
+    {
+      "id": "notebook:nb03_silver_orders",
+      "name": "nb03_silver_orders",
+      "type": "notebook",
+      "metadata": {
+        "path": "C:/Users/AnandRaju/SDIA/starter_kit/project/notebooks/nb03_silver_orders.py"
+      }
+    },
+    {
+      "id": "notebook:nb04_silver_order_lines",
+      "name": "nb04_silver_order_lines",
+      "type": "notebook",
+      "metadata": {
+        "path": "C:/Users/AnandRaju/SDIA/starter_kit/project/notebooks/nb04_silver_order_lines.py"
+      }
+    },
+    {
+      "id": "notebook:nb05_gold_sales",
+      "name": "nb05_gold_sales",
+      "type": "notebook",
+      "metadata": {
+        "path": "C:/Users/AnandRaju/SDIA/starter_kit/project/notebooks/nb05_gold_sales.py"
+      }
+    },
+    {
+      "id": "notebook:nb06_gold_customer",
+      "name": "nb06_gold_customer",
+      "type": "notebook",
+      "metadata": {
+        "path": "C:/Users/AnandRaju/SDIA/starter_kit/project/notebooks/nb06_gold_customer.py"
+      }
+    },
+    {
+      "id": "pipeline:pl_daily_sales_load",
+      "name": "pl_daily_sales_load",
+      "type": "pipeline",
+      "metadata": {
+        "trigger": "daily 02:00 IST"
+      }
+    },
+    {
+      "id": "pipeline_activity:pl_daily_sales_load/Gold_Customer",
+      "name": "pl_daily_sales_load/Gold_Customer",
+      "type": "pipeline_activity",
+      "metadata": {
+        "activity_name": "Gold_Customer",
+        "activity_type": "Notebook"
+      }
+    },
+    {
+      "id": "pipeline_activity:pl_daily_sales_load/Gold_Sales",
+      "name": "pl_daily_sales_load/Gold_Sales",
+      "type": "pipeline_activity",
+      "metadata": {
+        "activity_name": "Gold_Sales",
+        "activity_type": "Notebook"
+      }
+    },
+    {
+      "id": "pipeline_activity:pl_daily_sales_load/Ingest_CRM_Customers",
+      "name": "pl_daily_sales_load/Ingest_CRM_Customers",
+      "type": "pipeline_activity",
+      "metadata": {
+        "activity_name": "Ingest_CRM_Customers",
+        "activity_type": "Notebook"
+      }
+    },
+    {
+      "id": "pipeline_activity:pl_daily_sales_load/Ingest_ERP_OrderLines",
+      "name": "pl_daily_sales_load/Ingest_ERP_OrderLines",
+      "type": "pipeline_activity",
+      "metadata": {
+        "activity_name": "Ingest_ERP_OrderLines",
+        "activity_type": "Notebook"
+      }
+    },
+    {
+      "id": "pipeline_activity:pl_daily_sales_load/Ingest_ERP_Orders",
+      "name": "pl_daily_sales_load/Ingest_ERP_Orders",
+      "type": "pipeline_activity",
+      "metadata": {
+        "activity_name": "Ingest_ERP_Orders",
+        "activity_type": "Notebook"
+      }
+    },
+    {
+      "id": "pipeline_activity:pl_daily_sales_load/Ingest_ERP_Products",
+      "name": "pl_daily_sales_load/Ingest_ERP_Products",
+      "type": "pipeline_activity",
+      "metadata": {
+        "activity_name": "Ingest_ERP_Products",
+        "activity_type": "Notebook"
+      }
+    },
+    {
+      "id": "pipeline_activity:pl_daily_sales_load/Refresh_PBI_Sales_Analytics",
+      "name": "pl_daily_sales_load/Refresh_PBI_Sales_Analytics",
+      "type": "pipeline_activity",
+      "metadata": {
+        "activity_name": "Refresh_PBI_Sales_Analytics",
+        "activity_type": "PowerBIDatasetRefresh"
+      }
+    },
+    {
+      "id": "pipeline_activity:pl_daily_sales_load/Silver_Customers",
+      "name": "pl_daily_sales_load/Silver_Customers",
+      "type": "pipeline_activity",
+      "metadata": {
+        "activity_name": "Silver_Customers",
+        "activity_type": "Notebook"
+      }
+    },
+    {
+      "id": "pipeline_activity:pl_daily_sales_load/Silver_OrderLines",
+      "name": "pl_daily_sales_load/Silver_OrderLines",
+      "type": "pipeline_activity",
+      "metadata": {
+        "activity_name": "Silver_OrderLines",
+        "activity_type": "Notebook"
+      }
+    },
+    {
+      "id": "pipeline_activity:pl_daily_sales_load/Silver_Orders",
+      "name": "pl_daily_sales_load/Silver_Orders",
+      "type": "pipeline_activity",
+      "metadata": {
+        "activity_name": "Silver_Orders",
+        "activity_type": "Notebook"
+      }
+    },
+    {
+      "id": "report:Customer Segments",
+      "name": "Customer Segments",
+      "type": "report",
+      "metadata": {
+        "owner": "kavya.m@contoso-demo.example",
+        "audience": "Marketing"
+      }
+    },
+    {
+      "id": "report:Executive Sales",
+      "name": "Executive Sales",
+      "type": "report",
+      "metadata": {
+        "owner": "arjun.k@contoso-demo.example",
+        "audience": "Leadership team"
+      }
+    },
+    {
+      "id": "report:Product Margin",
+      "name": "Product Margin",
+      "type": "report",
+      "metadata": {
+        "owner": "rahul.s@contoso-demo.example",
+        "audience": "Product and Finance"
+      }
+    },
+    {
+      "id": "report_visual:Customer Segments/Active Customers",
+      "name": "Customer Segments/Active Customers",
+      "type": "report_visual",
+      "metadata": {
+        "report": "Customer Segments",
+        "fields": [
+          "[Active Customers]"
+        ]
+      }
+    },
+    {
+      "id": "report_visual:Customer Segments/Customer List",
+      "name": "Customer Segments/Customer List",
+      "type": "report_visual",
+      "metadata": {
+        "report": "Customer Segments",
+        "fields": [
+          "dim_customer[full_name]",
+          "dim_customer[segment]",
+          "dim_customer[region_name]",
+          "[Net Sales]"
+        ]
+      }
+    },
+    {
+      "id": "report_visual:Customer Segments/Net Sales by Segment",
+      "name": "Customer Segments/Net Sales by Segment",
+      "type": "report_visual",
+      "metadata": {
+        "report": "Customer Segments",
+        "fields": [
+          "dim_customer[segment]",
+          "[Net Sales]"
+        ]
+      }
+    },
+    {
+      "id": "report_visual:Executive Sales/Margin %",
+      "name": "Executive Sales/Margin %",
+      "type": "report_visual",
+      "metadata": {
+        "report": "Executive Sales",
+        "fields": [
+          "[Margin %]"
+        ]
+      }
+    },
+    {
+      "id": "report_visual:Executive Sales/Monthly Trend",
+      "name": "Executive Sales/Monthly Trend",
+      "type": "report_visual",
+      "metadata": {
+        "report": "Executive Sales",
+        "fields": [
+          "fact_sales[order_date]",
+          "[Net Sales]"
+        ]
+      }
+    },
+    {
+      "id": "report_visual:Executive Sales/Net Sales",
+      "name": "Executive Sales/Net Sales",
+      "type": "report_visual",
+      "metadata": {
+        "report": "Executive Sales",
+        "fields": [
+          "[Net Sales]"
+        ]
+      }
+    },
+    {
+      "id": "report_visual:Executive Sales/Net Sales by Region",
+      "name": "Executive Sales/Net Sales by Region",
+      "type": "report_visual",
+      "metadata": {
+        "report": "Executive Sales",
+        "fields": [
+          "dim_customer[region_name]",
+          "[Net Sales]"
+        ]
+      }
+    },
+    {
+      "id": "report_visual:Executive Sales/Top Products",
+      "name": "Executive Sales/Top Products",
+      "type": "report_visual",
+      "metadata": {
+        "report": "Executive Sales",
+        "fields": [
+          "dim_product[product_name]",
+          "[Net Sales]",
+          "[Margin %]"
+        ]
+      }
+    },
+    {
+      "id": "report_visual:Product Margin/Margin by Category",
+      "name": "Product Margin/Margin by Category",
+      "type": "report_visual",
+      "metadata": {
+        "report": "Product Margin",
+        "fields": [
+          "dim_product[category]",
+          "[Margin]"
+        ]
+      }
+    },
+    {
+      "id": "report_visual:Product Margin/Product Cost Table",
+      "name": "Product Margin/Product Cost Table",
+      "type": "report_visual",
+      "metadata": {
+        "report": "Product Margin",
+        "fields": [
+          "dim_product[product_name]",
+          "[Cost]",
+          "[Margin %]"
+        ]
+      }
+    },
+    {
+      "id": "semantic_model:Sales Analytics",
+      "name": "Sales Analytics",
+      "type": "semantic_model",
+      "metadata": {
+        "workspace": "WS-Sales-PROD",
+        "storage_mode": "Import from Databricks SQL warehouse"
+      }
+    },
+    {
+      "id": "semantic_table:dim_customer",
+      "name": "dim_customer",
+      "type": "semantic_table",
+      "metadata": {
+        "source": "gold.dim_customer",
+        "columns": [
+          "customer_id",
+          "full_name",
+          "segment",
+          "region_name",
+          "is_active"
+        ]
+      }
+    },
+    {
+      "id": "semantic_table:dim_product",
+      "name": "dim_product",
+      "type": "semantic_table",
+      "metadata": {
+        "source": "gold.dim_product",
+        "columns": [
+          "product_id",
+          "product_name",
+          "category",
+          "subcategory",
+          "list_price"
+        ]
+      }
+    },
+    {
+      "id": "semantic_table:fact_sales",
+      "name": "fact_sales",
+      "type": "semantic_table",
+      "metadata": {
+        "source": "gold.fact_sales",
+        "columns": [
+          "order_id",
+          "line_no",
+          "order_date",
+          "customer_id",
+          "product_id",
+          "quantity",
+          "net_amount",
+          "cost_amount",
+          "status"
+        ]
+      }
+    },
+    {
+      "id": "source_table:crm.customers",
+      "name": "crm.customers",
+      "type": "source_table",
+      "metadata": {
+        "reader": "json"
+      }
+    },
+    {
+      "id": "source_table:erp.order_lines",
+      "name": "erp.order_lines",
+      "type": "source_table",
+      "metadata": {
+        "reader": "jdbc"
+      }
+    },
+    {
+      "id": "source_table:erp.orders",
+      "name": "erp.orders",
+      "type": "source_table",
+      "metadata": {
+        "reader": "jdbc"
+      }
+    },
+    {
+      "id": "source_table:erp.products",
+      "name": "erp.products",
+      "type": "source_table",
+      "metadata": {
+        "reader": "jdbc"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "lakehouse_table:bronze.crm_customers",
+      "target": "lakehouse_table:silver.customers",
+      "relationship": "transformed_to",
+      "evidence": "nb02_silver_customers.py: reads bronze.crm_customers and writes silver.customers",
+      "notebook": "nb02_silver_customers",
+      "referenced_columns": [
+        "customer_id",
+        "email",
+        "first_name",
+        "last_name"
+      ],
+      "selected_columns": [
+        "created_at",
+        "customer_id",
+        "email",
+        "first_name",
+        "full_name",
+        "is_active",
+        "last_name",
+        "region_code",
+        "segment"
+      ],
+      "join_columns": [],
+      "column_dependencies": {
+        "created_at": [
+          "created_at"
+        ],
+        "customer_id": [
+          "customer_id"
+        ],
+        "email": [
+          "email"
+        ],
+        "first_name": [
+          "first_name"
+        ],
+        "full_name": [
+          "first_name",
+          "last_name"
+        ],
+        "is_active": [
+          "is_active"
+        ],
+        "last_name": [
+          "last_name"
+        ],
+        "region_code": [
+          "region_code"
+        ],
+        "segment": [
+          "segment"
+        ]
+      }
+    },
+    {
+      "source": "lakehouse_table:bronze.crm_customers",
+      "target": "notebook:nb02_silver_customers",
+      "relationship": "read_by",
+      "evidence": "nb02_silver_customers.py:7 spark.table('bronze.crm_customers')",
+      "columns": [
+        "created_at",
+        "customer_id",
+        "email",
+        "first_name",
+        "full_name",
+        "is_active",
+        "last_name",
+        "region_code",
+        "segment"
+      ],
+      "referenced_columns": [
+        "customer_id",
+        "email",
+        "first_name",
+        "last_name"
+      ],
+      "join_columns": []
+    },
+    {
+      "source": "lakehouse_table:bronze.erp_order_lines",
+      "target": "lakehouse_table:silver.order_lines",
+      "relationship": "transformed_to",
+      "evidence": "nb04_silver_order_lines.py: reads bronze.erp_order_lines and writes silver.order_lines",
+      "notebook": "nb04_silver_order_lines",
+      "referenced_columns": [
+        "quantity",
+        "unit_price"
+      ],
+      "selected_columns": [
+        "line_amount",
+        "line_no",
+        "order_id",
+        "product_id",
+        "quantity",
+        "unit_price"
+      ],
+      "join_columns": [],
+      "column_dependencies": {
+        "line_amount": [
+          "quantity",
+          "unit_price"
+        ],
+        "line_no": [
+          "line_no"
+        ],
+        "order_id": [
+          "order_id"
+        ],
+        "product_id": [
+          "product_id"
+        ],
+        "quantity": [
+          "quantity"
+        ],
+        "unit_price": [
+          "unit_price"
+        ]
+      }
+    },
+    {
+      "source": "lakehouse_table:bronze.erp_order_lines",
+      "target": "notebook:nb04_silver_order_lines",
+      "relationship": "read_by",
+      "evidence": "nb04_silver_order_lines.py:7 spark.table('bronze.erp_order_lines')",
+      "columns": [
+        "line_amount",
+        "line_no",
+        "order_id",
+        "product_id",
+        "quantity",
+        "unit_price"
+      ],
+      "referenced_columns": [
+        "quantity",
+        "unit_price"
+      ],
+      "join_columns": []
+    },
+    {
+      "source": "lakehouse_table:bronze.erp_orders",
+      "target": "lakehouse_table:silver.orders",
+      "relationship": "transformed_to",
+      "evidence": "nb03_silver_orders.py: reads bronze.erp_orders and writes silver.orders",
+      "notebook": "nb03_silver_orders",
+      "referenced_columns": [
+        "order_id",
+        "status"
+      ],
+      "selected_columns": [
+        "currency",
+        "customer_id",
+        "discount_amount",
+        "order_date",
+        "order_id",
+        "status",
+        "total_amount"
+      ],
+      "join_columns": [],
+      "column_dependencies": {
+        "currency": [
+          "currency"
+        ],
+        "customer_id": [
+          "customer_id"
+        ],
+        "discount_amount": [
+          "discount_amount"
+        ],
+        "order_date": [
+          "order_date"
+        ],
+        "order_id": [
+          "order_id"
+        ],
+        "status": [
+          "status"
+        ],
+        "total_amount": [
+          "total_amount"
+        ]
+      }
+    },
+    {
+      "source": "lakehouse_table:bronze.erp_orders",
+      "target": "notebook:nb03_silver_orders",
+      "relationship": "read_by",
+      "evidence": "nb03_silver_orders.py:7 spark.table('bronze.erp_orders')",
+      "columns": [
+        "currency",
+        "customer_id",
+        "discount_amount",
+        "order_date",
+        "order_id",
+        "status",
+        "total_amount"
+      ],
+      "referenced_columns": [
+        "order_id",
+        "status"
+      ],
+      "join_columns": []
+    },
+    {
+      "source": "lakehouse_table:bronze.erp_products",
+      "target": "lakehouse_table:gold.dim_product",
+      "relationship": "transformed_to",
+      "evidence": "nb05_gold_sales.py: reads bronze.erp_products and writes gold.dim_product",
+      "notebook": "nb05_gold_sales",
+      "referenced_columns": [
+        "cost_price",
+        "discount_amount",
+        "line_amount",
+        "order_id",
+        "order_lines_total",
+        "product_id",
+        "quantity"
+      ],
+      "selected_columns": [
+        "category",
+        "cost_amount",
+        "cost_price",
+        "customer_id",
+        "line_no",
+        "list_price",
+        "net_amount",
+        "order_date",
+        "order_id",
+        "product_id",
+        "product_name",
+        "quantity",
+        "status",
+        "subcategory"
+      ],
+      "join_columns": [
+        "order_id",
+        "product_id"
+      ],
+      "column_dependencies": {
+        "category": [
+          "category"
+        ],
+        "cost_amount": [
+          "cost_price",
+          "quantity"
+        ],
+        "cost_price": [
+          "cost_price"
+        ],
+        "customer_id": [
+          "customer_id"
+        ],
+        "line_no": [
+          "line_no"
+        ],
+        "list_price": [
+          "list_price"
+        ],
+        "net_amount": [
+          "discount_amount",
+          "line_amount",
+          "order_lines_total"
+        ],
+        "order_date": [
+          "order_date"
+        ],
+        "order_id": [
+          "order_id"
+        ],
+        "product_id": [
+          "product_id"
+        ],
+        "product_name": [
+          "product_name"
+        ],
+        "quantity": [
+          "quantity"
+        ],
+        "status": [
+          "status"
+        ],
+        "subcategory": [
+          "subcategory"
+        ]
+      }
+    },
+    {
+      "source": "lakehouse_table:bronze.erp_products",
+      "target": "lakehouse_table:gold.fact_sales",
+      "relationship": "transformed_to",
+      "evidence": "nb05_gold_sales.py: reads bronze.erp_products and writes gold.fact_sales",
+      "notebook": "nb05_gold_sales",
+      "referenced_columns": [
+        "cost_price",
+        "discount_amount",
+        "line_amount",
+        "order_id",
+        "order_lines_total",
+        "product_id",
+        "quantity"
+      ],
+      "selected_columns": [
+        "category",
+        "cost_amount",
+        "cost_price",
+        "customer_id",
+        "line_no",
+        "list_price",
+        "net_amount",
+        "order_date",
+        "order_id",
+        "product_id",
+        "product_name",
+        "quantity",
+        "status",
+        "subcategory"
+      ],
+      "join_columns": [
+        "order_id",
+        "product_id"
+      ],
+      "column_dependencies": {
+        "category": [
+          "category"
+        ],
+        "cost_amount": [
+          "cost_price",
+          "quantity"
+        ],
+        "cost_price": [
+          "cost_price"
+        ],
+        "customer_id": [
+          "customer_id"
+        ],
+        "line_no": [
+          "line_no"
+        ],
+        "list_price": [
+          "list_price"
+        ],
+        "net_amount": [
+          "discount_amount",
+          "line_amount",
+          "order_lines_total"
+        ],
+        "order_date": [
+          "order_date"
+        ],
+        "order_id": [
+          "order_id"
+        ],
+        "product_id": [
+          "product_id"
+        ],
+        "product_name": [
+          "product_name"
+        ],
+        "quantity": [
+          "quantity"
+        ],
+        "status": [
+          "status"
+        ],
+        "subcategory": [
+          "subcategory"
+        ]
+      }
+    },
+    {
+      "source": "lakehouse_table:bronze.erp_products",
+      "target": "notebook:nb05_gold_sales",
+      "relationship": "read_by",
+      "evidence": "nb05_gold_sales.py:19 spark.table('bronze.erp_products')",
+      "columns": [
+        "category",
+        "cost_amount",
+        "cost_price",
+        "customer_id",
+        "discount_amount",
+        "line_amount",
+        "line_no",
+        "list_price",
+        "net_amount",
+        "order_date",
+        "order_id",
+        "order_lines_total",
+        "product_id",
+        "product_name",
+        "quantity",
+        "status",
+        "subcategory"
+      ],
+      "referenced_columns": [
+        "cost_price",
+        "discount_amount",
+        "line_amount",
+        "order_id",
+        "order_lines_total",
+        "product_id",
+        "quantity"
+      ],
+      "join_columns": [
+        "order_id",
+        "product_id"
+      ]
+    },
+    {
+      "source": "lakehouse_table:bronze.erp_products",
+      "target": "notebook:nb05_gold_sales",
+      "relationship": "read_by",
+      "evidence": "nb05_gold_sales.py:9 spark.table('bronze.erp_products')",
+      "columns": [
+        "category",
+        "cost_amount",
+        "cost_price",
+        "customer_id",
+        "discount_amount",
+        "line_amount",
+        "line_no",
+        "list_price",
+        "net_amount",
+        "order_date",
+        "order_id",
+        "order_lines_total",
+        "product_id",
+        "product_name",
+        "quantity",
+        "status",
+        "subcategory"
+      ],
+      "referenced_columns": [
+        "cost_price",
+        "discount_amount",
+        "line_amount",
+        "order_id",
+        "order_lines_total",
+        "product_id",
+        "quantity"
+      ],
+      "join_columns": [
+        "order_id",
+        "product_id"
+      ]
+    },
+    {
+      "source": "lakehouse_table:gold.dim_customer",
+      "target": "semantic_table:dim_customer",
+      "relationship": "modelled_as",
+      "evidence": "sales_analytics_model.json: semantic table 'dim_customer' sources 'gold.dim_customer'",
+      "columns": [
+        "customer_id",
+        "full_name",
+        "segment",
+        "region_name",
+        "is_active"
+      ]
+    },
+    {
+      "source": "lakehouse_table:gold.dim_product",
+      "target": "semantic_table:dim_product",
+      "relationship": "modelled_as",
+      "evidence": "sales_analytics_model.json: semantic table 'dim_product' sources 'gold.dim_product'",
+      "columns": [
+        "product_id",
+        "product_name",
+        "category",
+        "subcategory",
+        "list_price"
+      ]
+    },
+    {
+      "source": "lakehouse_table:gold.fact_sales",
+      "target": "semantic_table:fact_sales",
+      "relationship": "modelled_as",
+      "evidence": "sales_analytics_model.json: semantic table 'fact_sales' sources 'gold.fact_sales'",
+      "columns": [
+        "order_id",
+        "line_no",
+        "order_date",
+        "customer_id",
+        "product_id",
+        "quantity",
+        "net_amount",
+        "cost_amount",
+        "status"
+      ]
+    },
+    {
+      "source": "lakehouse_table:silver.customers",
+      "target": "lakehouse_table:gold.dim_customer",
+      "relationship": "transformed_to",
+      "evidence": "nb06_gold_customer.py: reads silver.customers and writes gold.dim_customer",
+      "notebook": "nb06_gold_customer",
+      "referenced_columns": [
+        "region_code"
+      ],
+      "selected_columns": [
+        "customer_id",
+        "full_name",
+        "is_active",
+        "region_name",
+        "segment"
+      ],
+      "join_columns": [
+        "region_code"
+      ],
+      "column_dependencies": {
+        "customer_id": [
+          "customer_id"
+        ],
+        "full_name": [
+          "full_name"
+        ],
+        "is_active": [
+          "is_active"
+        ],
+        "region_name": [
+          "region_code"
+        ],
+        "segment": [
+          "segment"
+        ]
+      }
+    },
+    {
+      "source": "lakehouse_table:silver.customers",
+      "target": "notebook:nb06_gold_customer",
+      "relationship": "read_by",
+      "evidence": "nb06_gold_customer.py:8 spark.table('silver.customers')",
+      "columns": [
+        "customer_id",
+        "full_name",
+        "is_active",
+        "region_code",
+        "region_name",
+        "segment"
+      ],
+      "referenced_columns": [
+        "region_code"
+      ],
+      "join_columns": [
+        "region_code"
+      ]
+    },
+    {
+      "source": "lakehouse_table:silver.order_lines",
+      "target": "lakehouse_table:gold.dim_product",
+      "relationship": "transformed_to",
+      "evidence": "nb05_gold_sales.py: reads silver.order_lines and writes gold.dim_product",
+      "notebook": "nb05_gold_sales",
+      "referenced_columns": [
+        "cost_price",
+        "discount_amount",
+        "line_amount",
+        "order_id",
+        "order_lines_total",
+        "product_id",
+        "quantity"
+      ],
+      "selected_columns": [
+        "category",
+        "cost_amount",
+        "cost_price",
+        "customer_id",
+        "line_no",
+        "list_price",
+        "net_amount",
+        "order_date",
+        "order_id",
+        "product_id",
+        "product_name",
+        "quantity",
+        "status",
+        "subcategory"
+      ],
+      "join_columns": [
+        "order_id",
+        "product_id"
+      ],
+      "column_dependencies": {
+        "category": [
+          "category"
+        ],
+        "cost_amount": [
+          "cost_price",
+          "quantity"
+        ],
+        "cost_price": [
+          "cost_price"
+        ],
+        "customer_id": [
+          "customer_id"
+        ],
+        "line_no": [
+          "line_no"
+        ],
+        "list_price": [
+          "list_price"
+        ],
+        "net_amount": [
+          "discount_amount",
+          "line_amount",
+          "order_lines_total"
+        ],
+        "order_date": [
+          "order_date"
+        ],
+        "order_id": [
+          "order_id"
+        ],
+        "product_id": [
+          "product_id"
+        ],
+        "product_name": [
+          "product_name"
+        ],
+        "quantity": [
+          "quantity"
+        ],
+        "status": [
+          "status"
+        ],
+        "subcategory": [
+          "subcategory"
+        ]
+      }
+    },
+    {
+      "source": "lakehouse_table:silver.order_lines",
+      "target": "lakehouse_table:gold.fact_sales",
+      "relationship": "transformed_to",
+      "evidence": "nb05_gold_sales.py: reads silver.order_lines and writes gold.fact_sales",
+      "notebook": "nb05_gold_sales",
+      "referenced_columns": [
+        "cost_price",
+        "discount_amount",
+        "line_amount",
+        "order_id",
+        "order_lines_total",
+        "product_id",
+        "quantity"
+      ],
+      "selected_columns": [
+        "category",
+        "cost_amount",
+        "cost_price",
+        "customer_id",
+        "line_no",
+        "list_price",
+        "net_amount",
+        "order_date",
+        "order_id",
+        "product_id",
+        "product_name",
+        "quantity",
+        "status",
+        "subcategory"
+      ],
+      "join_columns": [
+        "order_id",
+        "product_id"
+      ],
+      "column_dependencies": {
+        "category": [
+          "category"
+        ],
+        "cost_amount": [
+          "cost_price",
+          "quantity"
+        ],
+        "cost_price": [
+          "cost_price"
+        ],
+        "customer_id": [
+          "customer_id"
+        ],
+        "line_no": [
+          "line_no"
+        ],
+        "list_price": [
+          "list_price"
+        ],
+        "net_amount": [
+          "discount_amount",
+          "line_amount",
+          "order_lines_total"
+        ],
+        "order_date": [
+          "order_date"
+        ],
+        "order_id": [
+          "order_id"
+        ],
+        "product_id": [
+          "product_id"
+        ],
+        "product_name": [
+          "product_name"
+        ],
+        "quantity": [
+          "quantity"
+        ],
+        "status": [
+          "status"
+        ],
+        "subcategory": [
+          "subcategory"
+        ]
+      }
+    },
+    {
+      "source": "lakehouse_table:silver.order_lines",
+      "target": "notebook:nb05_gold_sales",
+      "relationship": "read_by",
+      "evidence": "nb05_gold_sales.py:8 spark.table('silver.order_lines')",
+      "columns": [
+        "category",
+        "cost_amount",
+        "cost_price",
+        "customer_id",
+        "discount_amount",
+        "line_amount",
+        "line_no",
+        "list_price",
+        "net_amount",
+        "order_date",
+        "order_id",
+        "order_lines_total",
+        "product_id",
+        "product_name",
+        "quantity",
+        "status",
+        "subcategory"
+      ],
+      "referenced_columns": [
+        "cost_price",
+        "discount_amount",
+        "line_amount",
+        "order_id",
+        "order_lines_total",
+        "product_id",
+        "quantity"
+      ],
+      "join_columns": [
+        "order_id",
+        "product_id"
+      ]
+    },
+    {
+      "source": "lakehouse_table:silver.orders",
+      "target": "lakehouse_table:gold.dim_product",
+      "relationship": "transformed_to",
+      "evidence": "nb05_gold_sales.py: reads silver.orders and writes gold.dim_product",
+      "notebook": "nb05_gold_sales",
+      "referenced_columns": [
+        "cost_price",
+        "discount_amount",
+        "line_amount",
+        "order_id",
+        "order_lines_total",
+        "product_id",
+        "quantity"
+      ],
+      "selected_columns": [
+        "category",
+        "cost_amount",
+        "cost_price",
+        "customer_id",
+        "line_no",
+        "list_price",
+        "net_amount",
+        "order_date",
+        "order_id",
+        "product_id",
+        "product_name",
+        "quantity",
+        "status",
+        "subcategory"
+      ],
+      "join_columns": [
+        "order_id",
+        "product_id"
+      ],
+      "column_dependencies": {
+        "category": [
+          "category"
+        ],
+        "cost_amount": [
+          "cost_price",
+          "quantity"
+        ],
+        "cost_price": [
+          "cost_price"
+        ],
+        "customer_id": [
+          "customer_id"
+        ],
+        "line_no": [
+          "line_no"
+        ],
+        "list_price": [
+          "list_price"
+        ],
+        "net_amount": [
+          "discount_amount",
+          "line_amount",
+          "order_lines_total"
+        ],
+        "order_date": [
+          "order_date"
+        ],
+        "order_id": [
+          "order_id"
+        ],
+        "product_id": [
+          "product_id"
+        ],
+        "product_name": [
+          "product_name"
+        ],
+        "quantity": [
+          "quantity"
+        ],
+        "status": [
+          "status"
+        ],
+        "subcategory": [
+          "subcategory"
+        ]
+      }
+    },
+    {
+      "source": "lakehouse_table:silver.orders",
+      "target": "lakehouse_table:gold.fact_sales",
+      "relationship": "transformed_to",
+      "evidence": "nb05_gold_sales.py: reads silver.orders and writes gold.fact_sales",
+      "notebook": "nb05_gold_sales",
+      "referenced_columns": [
+        "cost_price",
+        "discount_amount",
+        "line_amount",
+        "order_id",
+        "order_lines_total",
+        "product_id",
+        "quantity"
+      ],
+      "selected_columns": [
+        "category",
+        "cost_amount",
+        "cost_price",
+        "customer_id",
+        "line_no",
+        "list_price",
+        "net_amount",
+        "order_date",
+        "order_id",
+        "product_id",
+        "product_name",
+        "quantity",
+        "status",
+        "subcategory"
+      ],
+      "join_columns": [
+        "order_id",
+        "product_id"
+      ],
+      "column_dependencies": {
+        "category": [
+          "category"
+        ],
+        "cost_amount": [
+          "cost_price",
+          "quantity"
+        ],
+        "cost_price": [
+          "cost_price"
+        ],
+        "customer_id": [
+          "customer_id"
+        ],
+        "line_no": [
+          "line_no"
+        ],
+        "list_price": [
+          "list_price"
+        ],
+        "net_amount": [
+          "discount_amount",
+          "line_amount",
+          "order_lines_total"
+        ],
+        "order_date": [
+          "order_date"
+        ],
+        "order_id": [
+          "order_id"
+        ],
+        "product_id": [
+          "product_id"
+        ],
+        "product_name": [
+          "product_name"
+        ],
+        "quantity": [
+          "quantity"
+        ],
+        "status": [
+          "status"
+        ],
+        "subcategory": [
+          "subcategory"
+        ]
+      }
+    },
+    {
+      "source": "lakehouse_table:silver.orders",
+      "target": "notebook:nb05_gold_sales",
+      "relationship": "read_by",
+      "evidence": "nb05_gold_sales.py:7 spark.table('silver.orders')",
+      "columns": [
+        "category",
+        "cost_amount",
+        "cost_price",
+        "customer_id",
+        "discount_amount",
+        "line_amount",
+        "line_no",
+        "list_price",
+        "net_amount",
+        "order_date",
+        "order_id",
+        "order_lines_total",
+        "product_id",
+        "product_name",
+        "quantity",
+        "status",
+        "subcategory"
+      ],
+      "referenced_columns": [
+        "cost_price",
+        "discount_amount",
+        "line_amount",
+        "order_id",
+        "order_lines_total",
+        "product_id",
+        "quantity"
+      ],
+      "join_columns": [
+        "order_id",
+        "product_id"
+      ]
+    },
+    {
+      "source": "measure:Active Customers",
+      "target": "report_visual:Customer Segments/Active Customers",
+      "relationship": "used_by_visual",
+      "evidence": "sales_analytics_model.json: visual 'Active Customers' uses measure [Active Customers]"
+    },
+    {
+      "source": "measure:Active Customers",
+      "target": "semantic_model:Sales Analytics",
+      "relationship": "defined_in",
+      "evidence": "sales_analytics_model.json: measure 'Active Customers'"
+    },
+    {
+      "source": "measure:Cost",
+      "target": "measure:Margin",
+      "relationship": "measure_dependency",
+      "evidence": "sales_analytics_model.json: Margin expression references [Cost]"
+    },
+    {
+      "source": "measure:Cost",
+      "target": "report_visual:Product Margin/Product Cost Table",
+      "relationship": "used_by_visual",
+      "evidence": "sales_analytics_model.json: visual 'Product Cost Table' uses measure [Cost]"
+    },
+    {
+      "source": "measure:Cost",
+      "target": "semantic_model:Sales Analytics",
+      "relationship": "defined_in",
+      "evidence": "sales_analytics_model.json: measure 'Cost'"
+    },
+    {
+      "source": "measure:Margin",
+      "target": "measure:Margin %",
+      "relationship": "measure_dependency",
+      "evidence": "sales_analytics_model.json: Margin % expression references [Margin]"
+    },
+    {
+      "source": "measure:Margin",
+      "target": "report_visual:Product Margin/Margin by Category",
+      "relationship": "used_by_visual",
+      "evidence": "sales_analytics_model.json: visual 'Margin by Category' uses measure [Margin]"
+    },
+    {
+      "source": "measure:Margin",
+      "target": "semantic_model:Sales Analytics",
+      "relationship": "defined_in",
+      "evidence": "sales_analytics_model.json: measure 'Margin'"
+    },
+    {
+      "source": "measure:Margin %",
+      "target": "report_visual:Executive Sales/Margin %",
+      "relationship": "used_by_visual",
+      "evidence": "sales_analytics_model.json: visual 'Margin %' uses measure [Margin %]"
+    },
+    {
+      "source": "measure:Margin %",
+      "target": "report_visual:Executive Sales/Top Products",
+      "relationship": "used_by_visual",
+      "evidence": "sales_analytics_model.json: visual 'Top Products' uses measure [Margin %]"
+    },
+    {
+      "source": "measure:Margin %",
+      "target": "report_visual:Product Margin/Product Cost Table",
+      "relationship": "used_by_visual",
+      "evidence": "sales_analytics_model.json: visual 'Product Cost Table' uses measure [Margin %]"
+    },
+    {
+      "source": "measure:Margin %",
+      "target": "semantic_model:Sales Analytics",
+      "relationship": "defined_in",
+      "evidence": "sales_analytics_model.json: measure 'Margin %'"
+    },
+    {
+      "source": "measure:Net Sales",
+      "target": "measure:Margin",
+      "relationship": "measure_dependency",
+      "evidence": "sales_analytics_model.json: Margin expression references [Net Sales]"
+    },
+    {
+      "source": "measure:Net Sales",
+      "target": "measure:Margin %",
+      "relationship": "measure_dependency",
+      "evidence": "sales_analytics_model.json: Margin % expression references [Net Sales]"
+    },
+    {
+      "source": "measure:Net Sales",
+      "target": "report_visual:Customer Segments/Customer List",
+      "relationship": "used_by_visual",
+      "evidence": "sales_analytics_model.json: visual 'Customer List' uses measure [Net Sales]"
+    },
+    {
+      "source": "measure:Net Sales",
+      "target": "report_visual:Customer Segments/Net Sales by Segment",
+      "relationship": "used_by_visual",
+      "evidence": "sales_analytics_model.json: visual 'Net Sales by Segment' uses measure [Net Sales]"
+    },
+    {
+      "source": "measure:Net Sales",
+      "target": "report_visual:Executive Sales/Monthly Trend",
+      "relationship": "used_by_visual",
+      "evidence": "sales_analytics_model.json: visual 'Monthly Trend' uses measure [Net Sales]"
+    },
+    {
+      "source": "measure:Net Sales",
+      "target": "report_visual:Executive Sales/Net Sales",
+      "relationship": "used_by_visual",
+      "evidence": "sales_analytics_model.json: visual 'Net Sales' uses measure [Net Sales]"
+    },
+    {
+      "source": "measure:Net Sales",
+      "target": "report_visual:Executive Sales/Net Sales by Region",
+      "relationship": "used_by_visual",
+      "evidence": "sales_analytics_model.json: visual 'Net Sales by Region' uses measure [Net Sales]"
+    },
+    {
+      "source": "measure:Net Sales",
+      "target": "report_visual:Executive Sales/Top Products",
+      "relationship": "used_by_visual",
+      "evidence": "sales_analytics_model.json: visual 'Top Products' uses measure [Net Sales]"
+    },
+    {
+      "source": "measure:Net Sales",
+      "target": "semantic_model:Sales Analytics",
+      "relationship": "defined_in",
+      "evidence": "sales_analytics_model.json: measure 'Net Sales'"
+    },
+    {
+      "source": "notebook:nb02_silver_customers",
+      "target": "lakehouse_table:silver.customers",
+      "relationship": "writes_to",
+      "evidence": "nb02_silver_customers.py:12 saveAsTable('silver.customers')",
+      "columns": [
+        "created_at",
+        "customer_id",
+        "email",
+        "first_name",
+        "full_name",
+        "is_active",
+        "last_name",
+        "region_code",
+        "segment"
+      ],
+      "column_dependencies": {
+        "created_at": [
+          "created_at"
+        ],
+        "customer_id": [
+          "customer_id"
+        ],
+        "email": [
+          "email"
+        ],
+        "first_name": [
+          "first_name"
+        ],
+        "full_name": [
+          "first_name",
+          "last_name"
+        ],
+        "is_active": [
+          "is_active"
+        ],
+        "last_name": [
+          "last_name"
+        ],
+        "region_code": [
+          "region_code"
+        ],
+        "segment": [
+          "segment"
+        ]
+      }
+    },
+    {
+      "source": "notebook:nb03_silver_orders",
+      "target": "lakehouse_table:silver.orders",
+      "relationship": "writes_to",
+      "evidence": "nb03_silver_orders.py:11 saveAsTable('silver.orders')",
+      "columns": [
+        "currency",
+        "customer_id",
+        "discount_amount",
+        "order_date",
+        "order_id",
+        "status",
+        "total_amount"
+      ],
+      "column_dependencies": {
+        "currency": [
+          "currency"
+        ],
+        "customer_id": [
+          "customer_id"
+        ],
+        "discount_amount": [
+          "discount_amount"
+        ],
+        "order_date": [
+          "order_date"
+        ],
+        "order_id": [
+          "order_id"
+        ],
+        "status": [
+          "status"
+        ],
+        "total_amount": [
+          "total_amount"
+        ]
+      }
+    },
+    {
+      "source": "notebook:nb04_silver_order_lines",
+      "target": "lakehouse_table:silver.order_lines",
+      "relationship": "writes_to",
+      "evidence": "nb04_silver_order_lines.py:10 saveAsTable('silver.order_lines')",
+      "columns": [
+        "line_amount",
+        "line_no",
+        "order_id",
+        "product_id",
+        "quantity",
+        "unit_price"
+      ],
+      "column_dependencies": {
+        "line_amount": [
+          "quantity",
+          "unit_price"
+        ],
+        "line_no": [
+          "line_no"
+        ],
+        "order_id": [
+          "order_id"
+        ],
+        "product_id": [
+          "product_id"
+        ],
+        "quantity": [
+          "quantity"
+        ],
+        "unit_price": [
+          "unit_price"
+        ]
+      }
+    },
+    {
+      "source": "notebook:nb05_gold_sales",
+      "target": "lakehouse_table:gold.dim_product",
+      "relationship": "writes_to",
+      "evidence": "nb05_gold_sales.py:20 saveAsTable('gold.dim_product')",
+      "columns": [
+        "category",
+        "cost_amount",
+        "cost_price",
+        "customer_id",
+        "line_no",
+        "list_price",
+        "net_amount",
+        "order_date",
+        "order_id",
+        "product_id",
+        "product_name",
+        "quantity",
+        "status",
+        "subcategory"
+      ],
+      "column_dependencies": {
+        "category": [
+          "category"
+        ],
+        "cost_amount": [
+          "cost_price",
+          "quantity"
+        ],
+        "cost_price": [
+          "cost_price"
+        ],
+        "customer_id": [
+          "customer_id"
+        ],
+        "line_no": [
+          "line_no"
+        ],
+        "list_price": [
+          "list_price"
+        ],
+        "net_amount": [
+          "discount_amount",
+          "line_amount",
+          "order_lines_total"
+        ],
+        "order_date": [
+          "order_date"
+        ],
+        "order_id": [
+          "order_id"
+        ],
+        "product_id": [
+          "product_id"
+        ],
+        "product_name": [
+          "product_name"
+        ],
+        "quantity": [
+          "quantity"
+        ],
+        "status": [
+          "status"
+        ],
+        "subcategory": [
+          "subcategory"
+        ]
+      }
+    },
+    {
+      "source": "notebook:nb05_gold_sales",
+      "target": "lakehouse_table:gold.fact_sales",
+      "relationship": "writes_to",
+      "evidence": "nb05_gold_sales.py:17 saveAsTable('gold.fact_sales')",
+      "columns": [
+        "category",
+        "cost_amount",
+        "cost_price",
+        "customer_id",
+        "line_no",
+        "list_price",
+        "net_amount",
+        "order_date",
+        "order_id",
+        "product_id",
+        "product_name",
+        "quantity",
+        "status",
+        "subcategory"
+      ],
+      "column_dependencies": {
+        "category": [
+          "category"
+        ],
+        "cost_amount": [
+          "cost_price",
+          "quantity"
+        ],
+        "cost_price": [
+          "cost_price"
+        ],
+        "customer_id": [
+          "customer_id"
+        ],
+        "line_no": [
+          "line_no"
+        ],
+        "list_price": [
+          "list_price"
+        ],
+        "net_amount": [
+          "discount_amount",
+          "line_amount",
+          "order_lines_total"
+        ],
+        "order_date": [
+          "order_date"
+        ],
+        "order_id": [
+          "order_id"
+        ],
+        "product_id": [
+          "product_id"
+        ],
+        "product_name": [
+          "product_name"
+        ],
+        "quantity": [
+          "quantity"
+        ],
+        "status": [
+          "status"
+        ],
+        "subcategory": [
+          "subcategory"
+        ]
+      }
+    },
+    {
+      "source": "notebook:nb06_gold_customer",
+      "target": "lakehouse_table:gold.dim_customer",
+      "relationship": "writes_to",
+      "evidence": "nb06_gold_customer.py:11 saveAsTable('gold.dim_customer')",
+      "columns": [
+        "customer_id",
+        "full_name",
+        "is_active",
+        "region_name",
+        "segment"
+      ],
+      "column_dependencies": {
+        "customer_id": [
+          "customer_id"
+        ],
+        "full_name": [
+          "full_name"
+        ],
+        "is_active": [
+          "is_active"
+        ],
+        "region_name": [
+          "region_code"
+        ],
+        "segment": [
+          "segment"
+        ]
+      }
+    },
+    {
+      "source": "pipeline:pl_daily_sales_load",
+      "target": "pipeline_activity:pl_daily_sales_load/Gold_Customer",
+      "relationship": "contains_activity",
+      "evidence": "pl_daily_sales_load.json: activity 'Gold_Customer'"
+    },
+    {
+      "source": "pipeline:pl_daily_sales_load",
+      "target": "pipeline_activity:pl_daily_sales_load/Gold_Sales",
+      "relationship": "contains_activity",
+      "evidence": "pl_daily_sales_load.json: activity 'Gold_Sales'"
+    },
+    {
+      "source": "pipeline:pl_daily_sales_load",
+      "target": "pipeline_activity:pl_daily_sales_load/Ingest_CRM_Customers",
+      "relationship": "contains_activity",
+      "evidence": "pl_daily_sales_load.json: activity 'Ingest_CRM_Customers'"
+    },
+    {
+      "source": "pipeline:pl_daily_sales_load",
+      "target": "pipeline_activity:pl_daily_sales_load/Ingest_ERP_OrderLines",
+      "relationship": "contains_activity",
+      "evidence": "pl_daily_sales_load.json: activity 'Ingest_ERP_OrderLines'"
+    },
+    {
+      "source": "pipeline:pl_daily_sales_load",
+      "target": "pipeline_activity:pl_daily_sales_load/Ingest_ERP_Orders",
+      "relationship": "contains_activity",
+      "evidence": "pl_daily_sales_load.json: activity 'Ingest_ERP_Orders'"
+    },
+    {
+      "source": "pipeline:pl_daily_sales_load",
+      "target": "pipeline_activity:pl_daily_sales_load/Ingest_ERP_Products",
+      "relationship": "contains_activity",
+      "evidence": "pl_daily_sales_load.json: activity 'Ingest_ERP_Products'"
+    },
+    {
+      "source": "pipeline:pl_daily_sales_load",
+      "target": "pipeline_activity:pl_daily_sales_load/Refresh_PBI_Sales_Analytics",
+      "relationship": "contains_activity",
+      "evidence": "pl_daily_sales_load.json: activity 'Refresh_PBI_Sales_Analytics'"
+    },
+    {
+      "source": "pipeline:pl_daily_sales_load",
+      "target": "pipeline_activity:pl_daily_sales_load/Silver_Customers",
+      "relationship": "contains_activity",
+      "evidence": "pl_daily_sales_load.json: activity 'Silver_Customers'"
+    },
+    {
+      "source": "pipeline:pl_daily_sales_load",
+      "target": "pipeline_activity:pl_daily_sales_load/Silver_OrderLines",
+      "relationship": "contains_activity",
+      "evidence": "pl_daily_sales_load.json: activity 'Silver_OrderLines'"
+    },
+    {
+      "source": "pipeline:pl_daily_sales_load",
+      "target": "pipeline_activity:pl_daily_sales_load/Silver_Orders",
+      "relationship": "contains_activity",
+      "evidence": "pl_daily_sales_load.json: activity 'Silver_Orders'"
+    },
+    {
+      "source": "pipeline_activity:pl_daily_sales_load/Gold_Customer",
+      "target": "notebook:nb06_gold_customer",
+      "relationship": "executes",
+      "evidence": "pl_daily_sales_load.json: activity 'Gold_Customer' executes notebook 'nb06_gold_customer'",
+      "params": {}
+    },
+    {
+      "source": "pipeline_activity:pl_daily_sales_load/Gold_Customer",
+      "target": "pipeline_activity:pl_daily_sales_load/Refresh_PBI_Sales_Analytics",
+      "relationship": "pipeline_dependency",
+      "evidence": "pl_daily_sales_load.json: 'Refresh_PBI_Sales_Analytics' dependsOn 'Gold_Customer'"
+    },
+    {
+      "source": "pipeline_activity:pl_daily_sales_load/Gold_Sales",
+      "target": "notebook:nb05_gold_sales",
+      "relationship": "executes",
+      "evidence": "pl_daily_sales_load.json: activity 'Gold_Sales' executes notebook 'nb05_gold_sales'",
+      "params": {}
+    },
+    {
+      "source": "pipeline_activity:pl_daily_sales_load/Gold_Sales",
+      "target": "pipeline_activity:pl_daily_sales_load/Refresh_PBI_Sales_Analytics",
+      "relationship": "pipeline_dependency",
+      "evidence": "pl_daily_sales_load.json: 'Refresh_PBI_Sales_Analytics' dependsOn 'Gold_Sales'"
+    },
+    {
+      "source": "pipeline_activity:pl_daily_sales_load/Ingest_CRM_Customers",
+      "target": "notebook:nb01_bronze_ingest",
+      "relationship": "executes",
+      "evidence": "pl_daily_sales_load.json: activity 'Ingest_CRM_Customers' executes notebook 'nb01_bronze_ingest'",
+      "params": {
+        "source": "crm.customers"
+      }
+    },
+    {
+      "source": "pipeline_activity:pl_daily_sales_load/Ingest_CRM_Customers",
+      "target": "pipeline_activity:pl_daily_sales_load/Silver_Customers",
+      "relationship": "pipeline_dependency",
+      "evidence": "pl_daily_sales_load.json: 'Silver_Customers' dependsOn 'Ingest_CRM_Customers'"
+    },
+    {
+      "source": "pipeline_activity:pl_daily_sales_load/Ingest_ERP_OrderLines",
+      "target": "notebook:nb01_bronze_ingest",
+      "relationship": "executes",
+      "evidence": "pl_daily_sales_load.json: activity 'Ingest_ERP_OrderLines' executes notebook 'nb01_bronze_ingest'",
+      "params": {
+        "source": "erp.order_lines"
+      }
+    },
+    {
+      "source": "pipeline_activity:pl_daily_sales_load/Ingest_ERP_OrderLines",
+      "target": "pipeline_activity:pl_daily_sales_load/Silver_OrderLines",
+      "relationship": "pipeline_dependency",
+      "evidence": "pl_daily_sales_load.json: 'Silver_OrderLines' dependsOn 'Ingest_ERP_OrderLines'"
+    },
+    {
+      "source": "pipeline_activity:pl_daily_sales_load/Ingest_ERP_Orders",
+      "target": "notebook:nb01_bronze_ingest",
+      "relationship": "executes",
+      "evidence": "pl_daily_sales_load.json: activity 'Ingest_ERP_Orders' executes notebook 'nb01_bronze_ingest'",
+      "params": {
+        "source": "erp.orders"
+      }
+    },
+    {
+      "source": "pipeline_activity:pl_daily_sales_load/Ingest_ERP_Orders",
+      "target": "pipeline_activity:pl_daily_sales_load/Silver_Orders",
+      "relationship": "pipeline_dependency",
+      "evidence": "pl_daily_sales_load.json: 'Silver_Orders' dependsOn 'Ingest_ERP_Orders'"
+    },
+    {
+      "source": "pipeline_activity:pl_daily_sales_load/Ingest_ERP_Products",
+      "target": "notebook:nb01_bronze_ingest",
+      "relationship": "executes",
+      "evidence": "pl_daily_sales_load.json: activity 'Ingest_ERP_Products' executes notebook 'nb01_bronze_ingest'",
+      "params": {
+        "source": "erp.products"
+      }
+    },
+    {
+      "source": "pipeline_activity:pl_daily_sales_load/Ingest_ERP_Products",
+      "target": "pipeline_activity:pl_daily_sales_load/Gold_Sales",
+      "relationship": "pipeline_dependency",
+      "evidence": "pl_daily_sales_load.json: 'Gold_Sales' dependsOn 'Ingest_ERP_Products'"
+    },
+    {
+      "source": "pipeline_activity:pl_daily_sales_load/Refresh_PBI_Sales_Analytics",
+      "target": "semantic_model:Sales Analytics",
+      "relationship": "refreshes",
+      "evidence": "pl_daily_sales_load.json: activity 'Refresh_PBI_Sales_Analytics' refreshes dataset 'Sales Analytics'"
+    },
+    {
+      "source": "pipeline_activity:pl_daily_sales_load/Silver_Customers",
+      "target": "notebook:nb02_silver_customers",
+      "relationship": "executes",
+      "evidence": "pl_daily_sales_load.json: activity 'Silver_Customers' executes notebook 'nb02_silver_customers'",
+      "params": {}
+    },
+    {
+      "source": "pipeline_activity:pl_daily_sales_load/Silver_Customers",
+      "target": "pipeline_activity:pl_daily_sales_load/Gold_Customer",
+      "relationship": "pipeline_dependency",
+      "evidence": "pl_daily_sales_load.json: 'Gold_Customer' dependsOn 'Silver_Customers'"
+    },
+    {
+      "source": "pipeline_activity:pl_daily_sales_load/Silver_OrderLines",
+      "target": "notebook:nb04_silver_order_lines",
+      "relationship": "executes",
+      "evidence": "pl_daily_sales_load.json: activity 'Silver_OrderLines' executes notebook 'nb04_silver_order_lines'",
+      "params": {}
+    },
+    {
+      "source": "pipeline_activity:pl_daily_sales_load/Silver_OrderLines",
+      "target": "pipeline_activity:pl_daily_sales_load/Gold_Sales",
+      "relationship": "pipeline_dependency",
+      "evidence": "pl_daily_sales_load.json: 'Gold_Sales' dependsOn 'Silver_OrderLines'"
+    },
+    {
+      "source": "pipeline_activity:pl_daily_sales_load/Silver_Orders",
+      "target": "notebook:nb03_silver_orders",
+      "relationship": "executes",
+      "evidence": "pl_daily_sales_load.json: activity 'Silver_Orders' executes notebook 'nb03_silver_orders'",
+      "params": {}
+    },
+    {
+      "source": "pipeline_activity:pl_daily_sales_load/Silver_Orders",
+      "target": "pipeline_activity:pl_daily_sales_load/Gold_Sales",
+      "relationship": "pipeline_dependency",
+      "evidence": "pl_daily_sales_load.json: 'Gold_Sales' dependsOn 'Silver_Orders'"
+    },
+    {
+      "source": "report:Customer Segments",
+      "target": "report_visual:Customer Segments/Active Customers",
+      "relationship": "contains_visual",
+      "evidence": "sales_analytics_model.json: report 'Customer Segments' contains visual 'Active Customers'"
+    },
+    {
+      "source": "report:Customer Segments",
+      "target": "report_visual:Customer Segments/Customer List",
+      "relationship": "contains_visual",
+      "evidence": "sales_analytics_model.json: report 'Customer Segments' contains visual 'Customer List'"
+    },
+    {
+      "source": "report:Customer Segments",
+      "target": "report_visual:Customer Segments/Net Sales by Segment",
+      "relationship": "contains_visual",
+      "evidence": "sales_analytics_model.json: report 'Customer Segments' contains visual 'Net Sales by Segment'"
+    },
+    {
+      "source": "report:Executive Sales",
+      "target": "report_visual:Executive Sales/Margin %",
+      "relationship": "contains_visual",
+      "evidence": "sales_analytics_model.json: report 'Executive Sales' contains visual 'Margin %'"
+    },
+    {
+      "source": "report:Executive Sales",
+      "target": "report_visual:Executive Sales/Monthly Trend",
+      "relationship": "contains_visual",
+      "evidence": "sales_analytics_model.json: report 'Executive Sales' contains visual 'Monthly Trend'"
+    },
+    {
+      "source": "report:Executive Sales",
+      "target": "report_visual:Executive Sales/Net Sales",
+      "relationship": "contains_visual",
+      "evidence": "sales_analytics_model.json: report 'Executive Sales' contains visual 'Net Sales'"
+    },
+    {
+      "source": "report:Executive Sales",
+      "target": "report_visual:Executive Sales/Net Sales by Region",
+      "relationship": "contains_visual",
+      "evidence": "sales_analytics_model.json: report 'Executive Sales' contains visual 'Net Sales by Region'"
+    },
+    {
+      "source": "report:Executive Sales",
+      "target": "report_visual:Executive Sales/Top Products",
+      "relationship": "contains_visual",
+      "evidence": "sales_analytics_model.json: report 'Executive Sales' contains visual 'Top Products'"
+    },
+    {
+      "source": "report:Product Margin",
+      "target": "report_visual:Product Margin/Margin by Category",
+      "relationship": "contains_visual",
+      "evidence": "sales_analytics_model.json: report 'Product Margin' contains visual 'Margin by Category'"
+    },
+    {
+      "source": "report:Product Margin",
+      "target": "report_visual:Product Margin/Product Cost Table",
+      "relationship": "contains_visual",
+      "evidence": "sales_analytics_model.json: report 'Product Margin' contains visual 'Product Cost Table'"
+    },
+    {
+      "source": "semantic_model:Sales Analytics",
+      "target": "report:Customer Segments",
+      "relationship": "serves_report",
+      "evidence": "sales_analytics_model.json: report 'Customer Segments' uses semantic model 'Sales Analytics'"
+    },
+    {
+      "source": "semantic_model:Sales Analytics",
+      "target": "report:Executive Sales",
+      "relationship": "serves_report",
+      "evidence": "sales_analytics_model.json: report 'Executive Sales' uses semantic model 'Sales Analytics'"
+    },
+    {
+      "source": "semantic_model:Sales Analytics",
+      "target": "report:Product Margin",
+      "relationship": "serves_report",
+      "evidence": "sales_analytics_model.json: report 'Product Margin' uses semantic model 'Sales Analytics'"
+    },
+    {
+      "source": "semantic_table:dim_customer",
+      "target": "measure:Active Customers",
+      "relationship": "column_used_by_measure",
+      "evidence": "sales_analytics_model.json: Active Customers expression references dim_customer[customer_id]",
+      "column": "dim_customer[customer_id]"
+    },
+    {
+      "source": "semantic_table:dim_customer",
+      "target": "measure:Active Customers",
+      "relationship": "column_used_by_measure",
+      "evidence": "sales_analytics_model.json: Active Customers expression references dim_customer[is_active]",
+      "column": "dim_customer[is_active]"
+    },
+    {
+      "source": "semantic_table:dim_customer",
+      "target": "report_visual:Customer Segments/Customer List",
+      "relationship": "column_used_by_visual",
+      "evidence": "sales_analytics_model.json: visual 'Customer List' uses dim_customer[full_name]",
+      "column": "full_name"
+    },
+    {
+      "source": "semantic_table:dim_customer",
+      "target": "report_visual:Customer Segments/Customer List",
+      "relationship": "column_used_by_visual",
+      "evidence": "sales_analytics_model.json: visual 'Customer List' uses dim_customer[region_name]",
+      "column": "region_name"
+    },
+    {
+      "source": "semantic_table:dim_customer",
+      "target": "report_visual:Customer Segments/Customer List",
+      "relationship": "column_used_by_visual",
+      "evidence": "sales_analytics_model.json: visual 'Customer List' uses dim_customer[segment]",
+      "column": "segment"
+    },
+    {
+      "source": "semantic_table:dim_customer",
+      "target": "report_visual:Customer Segments/Net Sales by Segment",
+      "relationship": "column_used_by_visual",
+      "evidence": "sales_analytics_model.json: visual 'Net Sales by Segment' uses dim_customer[segment]",
+      "column": "segment"
+    },
+    {
+      "source": "semantic_table:dim_customer",
+      "target": "report_visual:Executive Sales/Net Sales by Region",
+      "relationship": "column_used_by_visual",
+      "evidence": "sales_analytics_model.json: visual 'Net Sales by Region' uses dim_customer[region_name]",
+      "column": "region_name"
+    },
+    {
+      "source": "semantic_table:dim_customer",
+      "target": "semantic_model:Sales Analytics",
+      "relationship": "belongs_to_model",
+      "evidence": "sales_analytics_model.json: table 'dim_customer' belongs to 'Sales Analytics'"
+    },
+    {
+      "source": "semantic_table:dim_product",
+      "target": "report_visual:Executive Sales/Top Products",
+      "relationship": "column_used_by_visual",
+      "evidence": "sales_analytics_model.json: visual 'Top Products' uses dim_product[product_name]",
+      "column": "product_name"
+    },
+    {
+      "source": "semantic_table:dim_product",
+      "target": "report_visual:Product Margin/Margin by Category",
+      "relationship": "column_used_by_visual",
+      "evidence": "sales_analytics_model.json: visual 'Margin by Category' uses dim_product[category]",
+      "column": "category"
+    },
+    {
+      "source": "semantic_table:dim_product",
+      "target": "report_visual:Product Margin/Product Cost Table",
+      "relationship": "column_used_by_visual",
+      "evidence": "sales_analytics_model.json: visual 'Product Cost Table' uses dim_product[product_name]",
+      "column": "product_name"
+    },
+    {
+      "source": "semantic_table:dim_product",
+      "target": "semantic_model:Sales Analytics",
+      "relationship": "belongs_to_model",
+      "evidence": "sales_analytics_model.json: table 'dim_product' belongs to 'Sales Analytics'"
+    },
+    {
+      "source": "semantic_table:fact_sales",
+      "target": "measure:Cost",
+      "relationship": "column_used_by_measure",
+      "evidence": "sales_analytics_model.json: Cost expression references fact_sales[cost_amount]",
+      "column": "fact_sales[cost_amount]"
+    },
+    {
+      "source": "semantic_table:fact_sales",
+      "target": "measure:Net Sales",
+      "relationship": "column_used_by_measure",
+      "evidence": "sales_analytics_model.json: Net Sales expression references fact_sales[net_amount]",
+      "column": "fact_sales[net_amount]"
+    },
+    {
+      "source": "semantic_table:fact_sales",
+      "target": "report_visual:Executive Sales/Monthly Trend",
+      "relationship": "column_used_by_visual",
+      "evidence": "sales_analytics_model.json: visual 'Monthly Trend' uses fact_sales[order_date]",
+      "column": "order_date"
+    },
+    {
+      "source": "semantic_table:fact_sales",
+      "target": "semantic_model:Sales Analytics",
+      "relationship": "belongs_to_model",
+      "evidence": "sales_analytics_model.json: table 'fact_sales' belongs to 'Sales Analytics'"
+    },
+    {
+      "source": "source_table:crm.customers",
+      "target": "lakehouse_table:bronze.crm_customers",
+      "relationship": "ingested_to",
+      "evidence": "config/ingest_config.json: source=crm.customers; target=bronze.crm_customers",
+      "notebook": "nb01_bronze_ingest",
+      "write_mode": "append"
+    },
+    {
+      "source": "source_table:erp.order_lines",
+      "target": "lakehouse_table:bronze.erp_order_lines",
+      "relationship": "ingested_to",
+      "evidence": "config/ingest_config.json: source=erp.order_lines; target=bronze.erp_order_lines",
+      "notebook": "nb01_bronze_ingest",
+      "selected_columns": [
+        "line_amount",
+        "line_no",
+        "order_id",
+        "product_id",
+        "quantity",
+        "unit_price"
+      ],
+      "write_mode": "append"
+    },
+    {
+      "source": "source_table:erp.orders",
+      "target": "lakehouse_table:bronze.erp_orders",
+      "relationship": "ingested_to",
+      "evidence": "config/ingest_config.json: source=erp.orders; target=bronze.erp_orders",
+      "notebook": "nb01_bronze_ingest",
+      "selected_columns": [
+        "currency",
+        "customer_id",
+        "discount_amount",
+        "order_date",
+        "order_id",
+        "ship_date",
+        "status",
+        "total_amount"
+      ],
+      "write_mode": "append"
+    },
+    {
+      "source": "source_table:erp.products",
+      "target": "lakehouse_table:bronze.erp_products",
+      "relationship": "ingested_to",
+      "evidence": "config/ingest_config.json: source=erp.products; target=bronze.erp_products",
+      "notebook": "nb01_bronze_ingest",
+      "write_mode": "overwrite"
+    }
+  ]
+}

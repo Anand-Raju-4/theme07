@@ -1,0 +1,169 @@
+
+{
+  "metadata": {
+    "name": "Schema Drift Impact Analyzer Ground Truth",
+    "version": "0.1",
+    "purpose": "Independent expected impact labels for the 10 seeded schema changes",
+    "evaluation_scope": "change_level",
+    "analysis_rule": "Each seeded change is analyzed independently against the before state",
+    "object_level_accuracy_measured": false,
+    "status": "CHANGE_LEVEL_GROUND_TRUTH_READY"
+  },
+  "changes": [
+    {
+      "change_id": "SC01",
+      "source": "crm.customers",
+      "column": "email",
+      "change_type": "rename",
+      "expected_impact": "DEGRADES",
+      "expected_severity": "MEDIUM",
+      "expected_decision": "SAFE WITH WARNING",
+      "evidence": [
+        "CRM schema explicitly declares email as string",
+        "After schema renames email to email_address",
+        "Ingestion uses PERMISSIVE mode",
+        "nb02_silver_customers selects and transforms email"
+      ],
+      "validation_required": "Confirm the explicit CRM schema and behavior when email is renamed to email_address"
+    },
+    {
+      "change_id": "SC02",
+      "source": "crm.customers",
+      "column": "region_code",
+      "change_type": "rename",
+      "expected_impact": "DEGRADES",
+      "expected_severity": "MEDIUM",
+      "expected_decision": "SAFE WITH WARNING",
+      "evidence": [
+        "CRM schema explicitly declares region_code as string",
+        "After schema renames region_code to region",
+        "Ingestion uses PERMISSIVE mode",
+        "nb02_silver_customers selects region_code",
+        "nb06_gold_customer joins using region_code",
+        "Power BI visuals use the resulting region_name"
+    ],
+      "validation_required": "Confirm the explicit CRM schema and whether missing region_code becomes null or causes ingestion failure"
+    },
+    {
+      "change_id": "SC03",
+      "source": "erp.orders",
+      "column": "discount_amount",
+      "change_type": "drop",
+      "expected_impact": "BREAKS",
+      "expected_severity": "HIGH",
+      "expected_decision": "HOLD THE LOAD",
+      "evidence": [
+        "ERP orders ingestion query explicitly selects discount_amount",
+        "nb03_silver_orders selects discount_amount",
+        "nb05_gold_sales uses discount_amount in net_amount calculation"
+      ],
+      "validation_required": "Confirm the SQL source rejects the missing projected column"
+    },
+    {
+      "change_id": "SC04",
+      "source": "erp.orders",
+      "column": "ship_date",
+      "change_type": "drop",
+      "expected_impact": "BREAKS",
+      "expected_severity": "HIGH",
+      "expected_decision": "HOLD THE LOAD",
+      "evidence": [
+        "ERP orders ingestion query explicitly selects ship_date",
+        "The source column is removed in the after schema"
+      ],
+      "validation_required": "Confirm source query failure when ship_date no longer exists"
+    },
+    {
+      "change_id": "SC05",
+      "source": "erp.order_lines",
+      "column": "unit_price",
+      "change_type": "type change",
+      "expected_impact": "BREAKS",
+      "expected_severity": "HIGH",
+      "expected_decision": "HOLD THE LOAD",
+      "evidence": [
+        "ERP order lines ingestion query explicitly selects unit_price",
+        "nb04_silver_order_lines uses quantity and unit_price to derive line_amount",
+        "Downstream sales transformations depend on line_amount"
+      ],
+      "validation_required": "Confirm the Spark expression cannot safely perform the existing numeric calculation with the new string type"
+    },
+    {
+      "change_id": "SC06",
+      "source": "erp.products",
+      "column": "brand",
+      "change_type": "add",
+      "expected_impact": "NO IMPACT",
+      "expected_severity": "NONE",
+      "expected_decision": "SAFE TO LOAD",
+      "evidence": [
+        "Product ingestion uses SELECT *",
+        "Product ingestion enables overwrite_schema",
+        "No existing downstream consumer of brand was identified"
+      ],
+      "validation_required": "Confirm no pipeline, notebook, semantic model or visual references brand"
+    },
+    {
+      "change_id": "SC07",
+      "source": "crm.customers",
+      "column": "loyalty_tier",
+      "change_type": "add",
+      "expected_impact": "NO IMPACT",
+      "expected_severity": "NONE",
+      "expected_decision": "SAFE TO LOAD",
+      "evidence": [
+        "CRM schema does not declare loyalty_tier",
+        "Ingestion uses an explicit schema",
+        "No existing downstream consumer of loyalty_tier was identified"
+      ],
+      "validation_required": "Confirm whether the explicit CRM schema ignores the added field without failing ingestion"
+    },
+    {
+      "change_id": "SC08",
+      "source": "erp.orders",
+      "column": "total_amount",
+      "change_type": "type change",
+      "expected_impact": "NO IMPACT",
+      "expected_severity": "NONE",
+      "expected_decision": "SAFE TO LOAD",
+      "evidence": [
+        "Decimal precision increases from 18 to 20",
+        "Decimal scale increases from 2 to 4",
+        "The change preserves the existing numeric representation and expands capacity"
+      ],
+      "validation_required": "Confirm downstream expressions and target table types accept the widened decimal"
+    },
+    {
+      "change_id": "SC09",
+      "source": "erp.products",
+      "column": "cost_price",
+      "change_type": "rename",
+      "expected_impact": "BREAKS",
+      "expected_severity": "HIGH",
+      "expected_decision": "HOLD THE LOAD",
+      "evidence": [
+        "Product ingestion uses SELECT * and overwrite_schema",
+        "nb05_gold_sales references cost_price",
+        "cost_amount is derived using cost_price and quantity"
+      ],
+      "validation_required": "Confirm the renamed source column is propagated to Bronze and the existing Gold transformation fails"
+    },
+    {
+      "change_id": "SC10",
+      "source": "crm.customers",
+      "column": "is_active",
+      "change_type": "type change",
+      "expected_impact": "DEGRADES",
+      "expected_severity": "MEDIUM",
+      "expected_decision": "SAFE WITH WARNING",
+      "evidence": [
+        "CRM schema explicitly declares is_active as boolean",
+        "After schema changes is_active to string with Y/N values",
+        "Ingestion uses PERMISSIVE mode",
+        "Gold customer dimension carries is_active",
+        "Active Customers measure depends on dim_customer[is_active]"
+      ],
+      "validation_required": "Confirm how Y/N values are handled by the configured CRM reader and the Power BI measure"
+    }
+  ]
+}

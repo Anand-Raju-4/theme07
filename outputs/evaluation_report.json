@@ -1,0 +1,93 @@
+{
+  "evaluation_type": "STRUCTURAL_AND_POLICY_CONSISTENCY",
+  "ground_truth_accuracy_measured": false,
+  "ground_truth_note": "Independent expected impact labels have not yet been provided. Coverage and decision-policy checks do not prove predictive accuracy.",
+  "summary": {
+    "total_seeded_changes": 10,
+    "represented_changes": 10,
+    "report_rows": 42,
+    "coverage_passed": true,
+    "classification_values_valid": true,
+    "decision_policy_consistent": true,
+    "structural_validation_passed": true
+  },
+  "checks": {
+    "missing_change_ids": [],
+    "invalid_impact_rows": 0,
+    "invalid_severity_rows": 0,
+    "invalid_decision_rows": 0,
+    "decision_mismatch_ids": []
+  },
+  "change_results": [
+    {
+      "change_id": "SC01",
+      "impact": "BREAKS",
+      "severity": "HIGH",
+      "decision": "HOLD THE LOAD",
+      "report_object_count": 3
+    },
+    {
+      "change_id": "SC02",
+      "impact": "BREAKS",
+      "severity": "HIGH",
+      "decision": "HOLD THE LOAD",
+      "report_object_count": 10
+    },
+    {
+      "change_id": "SC03",
+      "impact": "BREAKS",
+      "severity": "HIGH",
+      "decision": "HOLD THE LOAD",
+      "report_object_count": 7
+    },
+    {
+      "change_id": "SC04",
+      "impact": "BREAKS",
+      "severity": "HIGH",
+      "decision": "HOLD THE LOAD",
+      "report_object_count": 1
+    },
+    {
+      "change_id": "SC05",
+      "impact": "BREAKS",
+      "severity": "HIGH",
+      "decision": "HOLD THE LOAD",
+      "report_object_count": 7
+    },
+    {
+      "change_id": "SC06",
+      "impact": "NO IMPACT",
+      "severity": "NONE",
+      "decision": "SAFE TO LOAD",
+      "report_object_count": 1
+    },
+    {
+      "change_id": "SC07",
+      "impact": "NO IMPACT",
+      "severity": "NONE",
+      "decision": "SAFE TO LOAD",
+      "report_object_count": 1
+    },
+    {
+      "change_id": "SC08",
+      "impact": "NO IMPACT",
+      "severity": "NONE",
+      "decision": "SAFE TO LOAD",
+      "report_object_count": 1
+    },
+    {
+      "change_id": "SC09",
+      "impact": "BREAKS",
+      "severity": "HIGH",
+      "decision": "HOLD THE LOAD",
+      "report_object_count": 5
+    },
+    {
+      "change_id": "SC10",
+      "impact": "DEGRADES",
+      "severity": "MEDIUM",
+      "decision": "SAFE WITH WARNING",
+      "report_object_count": 6
+    }
+  ]
+}

@@ -93,3 +93,4 @@ def test_decimal_precision_widening_is_safe():
     assert rows[0]["impact"] == "no impact"
     assert rows[0]["decision"] == "SAFE TO LOAD"
 
+

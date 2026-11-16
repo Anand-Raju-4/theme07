@@ -1,0 +1,142 @@
+{
+  "decision_policy": {
+    "policy_name": "Schema Drift Pipeline Load Gate",
+    "policy_version": "1.0",
+    "automatic_execution": false,
+    "rules": {
+      "NO IMPACT": "SAFE TO LOAD",
+      "BREAKS or HIGH": "HOLD THE LOAD",
+      "DEGRADES or MEDIUM": "SAFE WITH WARNING",
+      "UNKNOWN": "SAFE WITH WARNING"
+    }
+  },
+  "summary": {
+    "total_changes": 10,
+    "safe_to_load": 3,
+    "safe_with_warning": 1,
+    "hold_the_load": 6,
+    "human_approval_required": 7
+  },
+  "decisions": [
+    {
+      "change_id": "SC01",
+      "source": "crm.customers",
+      "change_type": "rename",
+      "column_before": "email",
+      "column_after": "email_address",
+      "impact": "BREAKS",
+      "severity": "HIGH",
+      "decision": "HOLD THE LOAD",
+      "reason": "A breaking or high-severity dependency requires remediation.",
+      "requires_human_approval": "YES"
+    },
+    {
+      "change_id": "SC02",
+      "source": "crm.customers",
+      "change_type": "rename",
+      "column_before": "region_code",
+      "column_after": "region",
+      "impact": "BREAKS",
+      "severity": "HIGH",
+      "decision": "HOLD THE LOAD",
+      "reason": "A breaking or high-severity dependency requires remediation.",
+      "requires_human_approval": "YES"
+    },
+    {
+      "change_id": "SC03",
+      "source": "erp.orders",
+      "change_type": "drop",
+      "column_before": "discount_amount",
+      "column_after": null,
+      "impact": "BREAKS",
+      "severity": "HIGH",
+      "decision": "HOLD THE LOAD",
+      "reason": "A breaking or high-severity dependency requires remediation.",
+      "requires_human_approval": "YES"
+    },
+    {
+      "change_id": "SC04",
+      "source": "erp.orders",
+      "change_type": "drop",
+      "column_before": "ship_date",
+      "column_after": null,
+      "impact": "BREAKS",
+      "severity": "HIGH",
+      "decision": "HOLD THE LOAD",
+      "reason": "A breaking or high-severity dependency requires remediation.",
+      "requires_human_approval": "YES"
+    },
+    {
+      "change_id": "SC05",
+      "source": "erp.order_lines",
+      "change_type": "type_change",
+      "column_before": "unit_price",
+      "column_after": "unit_price",
+      "impact": "BREAKS",
+      "severity": "HIGH",
+      "decision": "HOLD THE LOAD",
+      "reason": "A breaking or high-severity dependency requires remediation.",
+      "requires_human_approval": "YES"
+    },
+    {
+      "change_id": "SC06",
+      "source": "erp.products",
+      "change_type": "add",
+      "column_before": null,
+      "column_after": "brand",
+      "impact": "NO IMPACT",
+      "severity": "NONE",
+      "decision": "SAFE TO LOAD",
+      "reason": "No downstream impact was identified.",
+      "requires_human_approval": "NO"
+    },
+    {
+      "change_id": "SC07",
+      "source": "crm.customers",
+      "change_type": "add",
+      "column_before": null,
+      "column_after": "loyalty_tier",
+      "impact": "NO IMPACT",
+      "severity": "NONE",
+      "decision": "SAFE TO LOAD",
+      "reason": "No downstream impact was identified.",
+      "requires_human_approval": "NO"
+    },
+    {
+      "change_id": "SC08",
+      "source": "erp.orders",
+      "change_type": "type_change",
+      "column_before": "total_amount",
+      "column_after": "total_amount",
+      "impact": "NO IMPACT",
+      "severity": "NONE",
+      "decision": "SAFE TO LOAD",
+      "reason": "No downstream impact was identified.",
+      "requires_human_approval": "NO"
+    },
+    {
+      "change_id": "SC09",
+      "source": "erp.products",
+      "change_type": "rename",
+      "column_before": "cost_price",
+      "column_after": "standard_cost",
+      "impact": "BREAKS",
+      "severity": "HIGH",
+      "decision": "HOLD THE LOAD",
+      "reason": "A breaking or high-severity dependency requires remediation.",
+      "requires_human_approval": "YES"
+    },
+    {
+      "change_id": "SC10",
+      "source": "crm.customers",
+      "change_type": "type_change",
+      "column_before": "is_active",
+      "column_after": "is_active",
+      "impact": "DEGRADES",
+      "severity": "MEDIUM",
+      "decision": "SAFE WITH WARNING",
+      "reason": "A downstream dependency may be degraded. Validation is required.",
+      "requires_human_approval": "YES"
+    }
+  ]
+}

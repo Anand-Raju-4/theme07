@@ -1,0 +1,160 @@
+{
+  "semantic_model": "Sales Analytics",
+  "workspace": "WS-Sales-PROD",
+  "storage_mode": "Import from Databricks SQL warehouse",
+  "tables": [
+    {
+      "name": "fact_sales",
+      "source": "gold.fact_sales",
+      "columns": [
+        "order_id",
+        "line_no",
+        "order_date",
+        "customer_id",
+        "product_id",
+        "quantity",
+        "net_amount",
+        "cost_amount",
+        "status"
+      ]
+    },
+    {
+      "name": "dim_customer",
+      "source": "gold.dim_customer",
+      "columns": [
+        "customer_id",
+        "full_name",
+        "segment",
+        "region_name",
+        "is_active"
+      ]
+    },
+    {
+      "name": "dim_product",
+      "source": "gold.dim_product",
+      "columns": [
+        "product_id",
+        "product_name",
+        "category",
+        "subcategory",
+        "list_price"
+      ]
+    }
+  ],
+  "measures": [
+    {
+      "name": "Net Sales",
+      "expression": "SUM ( fact_sales[net_amount] )"
+    },
+    {
+      "name": "Cost",
+      "expression": "SUM ( fact_sales[cost_amount] )"
+    },
+    {
+      "name": "Margin",
+      "expression": "[Net Sales] - [Cost]"
+    },
+    {
+      "name": "Margin %",
+      "expression": "DIVIDE ( [Margin], [Net Sales] )"
+    },
+    {
+      "name": "Active Customers",
+      "expression": "CALCULATE ( DISTINCTCOUNT ( dim_customer[customer_id] ), dim_customer[is_active] = TRUE () )"
+    }
+  ],
+  "reports": [
+    {
+      "name": "Executive Sales",
+      "owner": "arjun.k@contoso-demo.example",
+      "audience": "Leadership team",
+      "visuals": [
+        {
+          "title": "Net Sales",
+          "fields": [
+            "[Net Sales]"
+          ]
+        },
+        {
+          "title": "Margin %",
+          "fields": [
+            "[Margin %]"
+          ]
+        },
+        {
+          "title": "Net Sales by Region",
+          "fields": [
+            "dim_customer[region_name]",
+            "[Net Sales]"
+          ]
+        },
+        {
+          "title": "Monthly Trend",
+          "fields": [
+            "fact_sales[order_date]",
+            "[Net Sales]"
+          ]
+        },
+        {
+          "title": "Top Products",
+          "fields": [
+            "dim_product[product_name]",
+            "[Net Sales]",
+            "[Margin %]"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Customer Segments",
+      "owner": "kavya.m@contoso-demo.example",
+      "audience": "Marketing",
+      "visuals": [
+        {
+          "title": "Active Customers",
+          "fields": [
+            "[Active Customers]"
+          ]
+        },
+        {
+          "title": "Net Sales by Segment",
+          "fields": [
+            "dim_customer[segment]",
+            "[Net Sales]"
+          ]
+        },
+        {
+          "title": "Customer List",
+          "fields": [
+            "dim_customer[full_name]",
+            "dim_customer[segment]",
+            "dim_customer[region_name]",
+            "[Net Sales]"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Product Margin",
+      "owner": "rahul.s@contoso-demo.example",
+      "audience": "Product and Finance",
+      "visuals": [
+        {
+          "title": "Margin by Category",
+          "fields": [
+            "dim_product[category]",
+            "[Margin]"
+          ]
+        },
+        {
+          "title": "Product Cost Table",
+          "fields": [
+            "dim_product[product_name]",
+            "[Cost]",
+            "[Margin %]"
+          ]
+        }
+      ]
+    }
+  ]
+}

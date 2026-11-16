@@ -1,0 +1,39 @@
+{
+  "sources": [
+    {
+      "source": "crm.customers",
+      "target": "bronze.crm_customers",
+      "reader": "json",
+      "path": "abfss://landing@contosolake.dfs.core.windows.net/crm/customers/",
+      "schema_file": "config/schemas/crm_customers.schema.json",
+      "mode": "PERMISSIVE",
+      "write_mode": "append",
+      "merge_schema": false
+    },
+    {
+      "source": "erp.orders",
+      "target": "bronze.erp_orders",
+      "reader": "jdbc",
+      "query": "SELECT order_id, customer_id, order_date, ship_date, status, currency, total_amount, discount_amount FROM dbo.orders WHERE modified_at > ?",
+      "write_mode": "append",
+      "merge_schema": false
+    },
+    {
+      "source": "erp.order_lines",
+      "target": "bronze.erp_order_lines",
+      "reader": "jdbc",
+      "query": "SELECT order_id, line_no, product_id, quantity, unit_price, line_amount FROM dbo.order_lines WHERE modified_at > ?",
+      "write_mode": "append",
+      "merge_schema": false
+    },
+    {
+      "source": "erp.products",
+      "target": "bronze.erp_products",
+      "reader": "jdbc",
+      "query": "SELECT * FROM dbo.products",
+      "write_mode": "overwrite",
+      "merge_schema": false,
+      "overwrite_schema": true
+    }
+  ]
+}

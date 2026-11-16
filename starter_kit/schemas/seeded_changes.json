@@ -1,0 +1,65 @@
+{
+  "note": "Analyse each change on its own, against the 'before' state.",
+  "changes": [
+    {
+      "change_id": "SC01",
+      "source": "crm.customers",
+      "change_type": "rename",
+      "detail": "email → email_address"
+    },
+    {
+      "change_id": "SC02",
+      "source": "crm.customers",
+      "change_type": "rename",
+      "detail": "region_code → region"
+    },
+    {
+      "change_id": "SC03",
+      "source": "erp.orders",
+      "change_type": "drop",
+      "detail": "discount_amount dropped"
+    },
+    {
+      "change_id": "SC04",
+      "source": "erp.orders",
+      "change_type": "drop",
+      "detail": "ship_date dropped"
+    },
+    {
+      "change_id": "SC05",
+      "source": "erp.order_lines",
+      "change_type": "type change",
+      "detail": "unit_price decimal(18,2) → varchar(20)"
+    },
+    {
+      "change_id": "SC06",
+      "source": "erp.products",
+      "change_type": "add",
+      "detail": "brand varchar(100) added"
+    },
+    {
+      "change_id": "SC07",
+      "source": "crm.customers",
+      "change_type": "add",
+      "detail": "loyalty_tier string added"
+    },
+    {
+      "change_id": "SC08",
+      "source": "erp.orders",
+      "change_type": "type change",
+      "detail": "total_amount decimal(18,2) → decimal(20,4)"
+    },
+    {
+      "change_id": "SC09",
+      "source": "erp.products",
+      "change_type": "rename",
+      "detail": "cost_price → standard_cost"
+    },
+    {
+      "change_id": "SC10",
+      "source": "crm.customers",
+      "change_type": "type change",
+      "detail": "is_active boolean → string ('Y'/'N')"
+    }
+  ]
+}

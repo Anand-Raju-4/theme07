@@ -1,0 +1,138 @@
+{
+  "crm.customers": {
+    "format": "JSON files (landing/crm/customers/)",
+    "columns": [
+      {
+        "name": "customer_id",
+        "type": "string"
+      },
+      {
+        "name": "first_name",
+        "type": "string"
+      },
+      {
+        "name": "last_name",
+        "type": "string"
+      },
+      {
+        "name": "email",
+        "type": "string"
+      },
+      {
+        "name": "phone",
+        "type": "string"
+      },
+      {
+        "name": "segment",
+        "type": "string"
+      },
+      {
+        "name": "region_code",
+        "type": "string"
+      },
+      {
+        "name": "created_at",
+        "type": "timestamp"
+      },
+      {
+        "name": "is_active",
+        "type": "boolean"
+      }
+    ]
+  },
+  "erp.orders": {
+    "format": "SQL Server table via JDBC",
+    "columns": [
+      {
+        "name": "order_id",
+        "type": "bigint"
+      },
+      {
+        "name": "customer_id",
+        "type": "string"
+      },
+      {
+        "name": "order_date",
+        "type": "date"
+      },
+      {
+        "name": "ship_date",
+        "type": "date"
+      },
+      {
+        "name": "status",
+        "type": "varchar(20)"
+      },
+      {
+        "name": "currency",
+        "type": "char(3)"
+      },
+      {
+        "name": "total_amount",
+        "type": "decimal(18,2)"
+      },
+      {
+        "name": "discount_amount",
+        "type": "decimal(18,2)"
+      }
+    ]
+  },
+  "erp.order_lines": {
+    "format": "SQL Server table via JDBC",
+    "columns": [
+      {
+        "name": "order_id",
+        "type": "bigint"
+      },
+      {
+        "name": "line_no",
+        "type": "int"
+      },
+      {
+        "name": "product_id",
+        "type": "string"
+      },
+      {
+        "name": "quantity",
+        "type": "int"
+      },
+      {
+        "name": "unit_price",
+        "type": "decimal(18,2)"
+      },
+      {
+        "name": "line_amount",
+        "type": "decimal(18,2)"
+      }
+    ]
+  },
+  "erp.products": {
+    "format": "SQL Server table via JDBC",
+    "columns": [
+      {
+        "name": "product_id",
+        "type": "string"
+      },
+      {
+        "name": "product_name",
+        "type": "varchar(200)"
+      },
+      {
+        "name": "category",
+        "type": "varchar(50)"
+      },
+      {
+        "name": "subcategory",
+        "type": "varchar(50)"
+      },
+      {
+        "name": "list_price",
+        "type": "decimal(18,2)"
+      },
+      {
+        "name": "cost_price",
+        "type": "decimal(18,2)"
+      }
+    ]
+  }
+}

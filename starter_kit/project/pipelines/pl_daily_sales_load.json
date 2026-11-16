@@ -1,0 +1,80 @@
+{
+  "name": "pl_daily_sales_load",
+  "trigger": "daily 02:00 IST",
+  "activities": [
+    {
+      "name": "Ingest_CRM_Customers",
+      "notebook": "nb01_bronze_ingest",
+      "params": {
+        "source": "crm.customers"
+      }
+    },
+    {
+      "name": "Ingest_ERP_Orders",
+      "notebook": "nb01_bronze_ingest",
+      "params": {
+        "source": "erp.orders"
+      }
+    },
+    {
+      "name": "Ingest_ERP_OrderLines",
+      "notebook": "nb01_bronze_ingest",
+      "params": {
+        "source": "erp.order_lines"
+      }
+    },
+    {
+      "name": "Ingest_ERP_Products",
+      "notebook": "nb01_bronze_ingest",
+      "params": {
+        "source": "erp.products"
+      }
+    },
+    {
+      "name": "Silver_Customers",
+      "notebook": "nb02_silver_customers",
+      "dependsOn": [
+        "Ingest_CRM_Customers"
+      ]
+    },
+    {
+      "name": "Silver_Orders",
+      "notebook": "nb03_silver_orders",
+      "dependsOn": [
+        "Ingest_ERP_Orders"
+      ]
+    },
+    {
+      "name": "Silver_OrderLines",
+      "notebook": "nb04_silver_order_lines",
+      "dependsOn": [
+        "Ingest_ERP_OrderLines"
+      ]
+    },
+    {
+      "name": "Gold_Sales",
+      "notebook": "nb05_gold_sales",
+      "dependsOn": [
+        "Silver_Orders",
+        "Silver_OrderLines",
+        "Ingest_ERP_Products"
+      ]
+    },
+    {
+      "name": "Gold_Customer",
+      "notebook": "nb06_gold_customer",
+      "dependsOn": [
+        "Silver_Customers"
+      ]
+    },
+    {
+      "name": "Refresh_PBI_Sales_Analytics",
+      "type": "PowerBIDatasetRefresh",
+      "dataset": "Sales Analytics",
+      "dependsOn": [
+        "Gold_Sales",
+        "Gold_Customer"
+      ]
+    }
+  ]
+}

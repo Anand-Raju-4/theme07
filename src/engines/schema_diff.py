@@ -597,6 +597,13 @@ def compare_schemas(
         )
     )
 
+    # Fallback change_id for unseeded changes
+    unseeded_idx = 1
+    for row in records:
+        if not row.get("change_id"):
+            row["change_id"] = f"CHG-{unseeded_idx:02d}"
+            unseeded_idx += 1
+
     return records
 
 

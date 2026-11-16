@@ -31,10 +31,7 @@ Only verified column dependencies are propagated.
 """
 
 from __future__ import annotations
-import graphviz
-import pandas as pd
-import streamlit as st
-import os
+
 import argparse
 import json
 import re
@@ -692,10 +689,18 @@ def analyse_one_change(
     source_id = resolve_source(change["source"], nodes)
 
     if not source_id:
-        print(
-            f"WARNING: Source '{change['source']}' "
-            f"could not be resolved for {change['change_id']}"
-        )
+        # If a critical change occurs on an unmapped source, warn rather than silently claiming safe
+        if change["change_type"] in {"drop", "type_change", "rename"}:
+            add_impact(
+                results,
+                change,
+                f"unmapped:{change['source']}",
+                {"name": change["source"], "type": "source_table"},
+                "DEGRADES",
+                "MEDIUM",
+                f"Source '{change['source']}' is not registered in the project lineage. Downstream impact cannot be verified.",
+                dependency_kind="unmapped_source",
+            )
         return
 
     # Queue state: node ID, current column, dependency kind.

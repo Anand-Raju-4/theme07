@@ -309,6 +309,20 @@ def _extract_ingestion(
             selected_columns=columns,
             write_mode=entry.get("write_mode"),
         )
+        notebook_id = graph.add_node("notebook", "nb01_bronze_ingest")
+        graph.add_edge(
+            source_id,
+            notebook_id,
+            "read_by",
+            f"config/ingest_config.json: nb01_bronze_ingest reads {source}",
+            columns=columns or [],
+        )
+        graph.add_edge(
+            notebook_id,
+            target_id,
+            "writes_to",
+            f"config/ingest_config.json: nb01_bronze_ingest writes {target}",
+        )
 
     return source_configs, source_to_target
 

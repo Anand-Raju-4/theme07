@@ -1,43 +1,46 @@
-﻿change_id,change_type,object,object_type,impact,severity,proposed_fix
-SC01,rename,bronze.crm_customers,lakehouse_table,BREAKS,HIGH,"Update references from 'email' to 'email_address' in the affected ingestion, notebook and downstream model."
-SC01,rename,nb02_silver_customers,notebook,BREAKS,HIGH,"Update references from 'email' to 'email_address' in the affected ingestion, notebook and downstream model."
-SC01,rename,silver.customers,lakehouse_table,BREAKS,HIGH,"Update references from 'email' to 'email_address' in the affected ingestion, notebook and downstream model."
-SC02,rename,Customer Segments,report,BREAKS,HIGH,"Update references from 'region_code' to 'region' in the affected ingestion, notebook and downstream model."
-SC02,rename,Customer Segments/Customer List,report_visual,BREAKS,HIGH,"Update references from 'region_code' to 'region' in the affected ingestion, notebook and downstream model."
-SC02,rename,Executive Sales,report,BREAKS,HIGH,"Update references from 'region_code' to 'region' in the affected ingestion, notebook and downstream model."
-SC02,rename,Executive Sales/Net Sales by Region,report_visual,BREAKS,HIGH,"Update references from 'region_code' to 'region' in the affected ingestion, notebook and downstream model."
-SC02,rename,bronze.crm_customers,lakehouse_table,BREAKS,HIGH,"Update references from 'region_code' to 'region' in the affected ingestion, notebook and downstream model."
-SC02,rename,dim_customer,semantic_table,BREAKS,HIGH,"Update references from 'region_code' to 'region' in the affected ingestion, notebook and downstream model."
-SC02,rename,gold.dim_customer,lakehouse_table,DEGRADES,MEDIUM,"Update references from 'region_code' to 'region' in the affected ingestion, notebook and downstream model."
-SC02,rename,nb02_silver_customers,notebook,BREAKS,HIGH,"Update references from 'region_code' to 'region' in the affected ingestion, notebook and downstream model."
-SC02,rename,nb06_gold_customer,notebook,BREAKS,HIGH,"Update references from 'region_code' to 'region' in the affected ingestion, notebook and downstream model."
-SC02,rename,silver.customers,lakehouse_table,BREAKS,HIGH,"Update references from 'region_code' to 'region' in the affected ingestion, notebook and downstream model."
-SC03,drop,bronze.erp_orders,lakehouse_table,BREAKS,HIGH,Restore 'discount_amount' or remove/update its downstream references before allowing the load.
-SC03,drop,fact_sales,semantic_table,BREAKS,HIGH,Restore 'discount_amount' or remove/update its downstream references before allowing the load.
-SC03,drop,gold.dim_product,lakehouse_table,BREAKS,HIGH,Restore 'discount_amount' or remove/update its downstream references before allowing the load.
-SC03,drop,gold.fact_sales,lakehouse_table,BREAKS,HIGH,Restore 'discount_amount' or remove/update its downstream references before allowing the load.
-SC03,drop,nb03_silver_orders,notebook,BREAKS,HIGH,Restore 'discount_amount' or remove/update its downstream references before allowing the load.
-SC03,drop,nb05_gold_sales,notebook,BREAKS,HIGH,Restore 'discount_amount' or remove/update its downstream references before allowing the load.
-SC03,drop,silver.orders,lakehouse_table,BREAKS,HIGH,Restore 'discount_amount' or remove/update its downstream references before allowing the load.
-SC04,drop,bronze.erp_orders,lakehouse_table,BREAKS,HIGH,Restore 'ship_date' or remove/update its downstream references before allowing the load.
-SC05,type_change,bronze.erp_order_lines,lakehouse_table,DEGRADES,MEDIUM,Validate the new type of 'unit_price'. Add an explicit cast or update dependent calculations where necessary.
-SC05,type_change,fact_sales,semantic_table,DEGRADES,MEDIUM,Validate the new type of 'unit_price'. Add an explicit cast or update dependent calculations where necessary.
-SC05,type_change,gold.dim_product,lakehouse_table,BREAKS,HIGH,Validate the new type of 'unit_price'. Add an explicit cast or update dependent calculations where necessary.
-SC05,type_change,gold.fact_sales,lakehouse_table,BREAKS,HIGH,Validate the new type of 'unit_price'. Add an explicit cast or update dependent calculations where necessary.
-SC05,type_change,nb04_silver_order_lines,notebook,DEGRADES,MEDIUM,Validate the new type of 'unit_price'. Add an explicit cast or update dependent calculations where necessary.
-SC05,type_change,nb05_gold_sales,notebook,BREAKS,HIGH,Validate the new type of 'unit_price'. Add an explicit cast or update dependent calculations where necessary.
-SC05,type_change,silver.order_lines,lakehouse_table,BREAKS,HIGH,Validate the new type of 'unit_price'. Add an explicit cast or update dependent calculations where necessary.
-SC06,add,erp.products,source_table,NO IMPACT,NONE,No downstream change required based on the currently extracted lineage.
-SC07,add,crm.customers,source_table,NO IMPACT,NONE,No downstream change required based on the currently extracted lineage.
-SC08,type change,erp.orders,source_table,NO IMPACT,NONE,No downstream change required based on the currently extracted lineage.
-SC09,rename,bronze.erp_products,lakehouse_table,BREAKS,HIGH,"Update references from 'cost_price' to 'standard_cost' in the affected ingestion, notebook and downstream model."
-SC09,rename,fact_sales,semantic_table,BREAKS,HIGH,"Update references from 'cost_price' to 'standard_cost' in the affected ingestion, notebook and downstream model."
-SC09,rename,gold.dim_product,lakehouse_table,BREAKS,HIGH,"Update references from 'cost_price' to 'standard_cost' in the affected ingestion, notebook and downstream model."
-SC09,rename,gold.fact_sales,lakehouse_table,BREAKS,HIGH,"Update references from 'cost_price' to 'standard_cost' in the affected ingestion, notebook and downstream model."
-SC09,rename,nb05_gold_sales,notebook,BREAKS,HIGH,"Update references from 'cost_price' to 'standard_cost' in the affected ingestion, notebook and downstream model."
-SC10,type_change,bronze.crm_customers,lakehouse_table,DEGRADES,MEDIUM,Validate the new type of 'is_active'. Add an explicit cast or update dependent calculations where necessary.
-SC10,type_change,dim_customer,semantic_table,DEGRADES,MEDIUM,Validate the new type of 'is_active'. Add an explicit cast or update dependent calculations where necessary.
-SC10,type_change,gold.dim_customer,lakehouse_table,DEGRADES,MEDIUM,Validate the new type of 'is_active'. Add an explicit cast or update dependent calculations where necessary.
-SC10,type_change,nb02_silver_customers,notebook,DEGRADES,MEDIUM,Validate the new type of 'is_active'. Add an explicit cast or update dependent calculations where necessary.
-SC10,type_change,nb06_gold_customer,notebook,DEGRADES,MEDIUM,Validate the new type of 'is_active'. Add an explicit cast or update dependent calculations where necessary.
-SC10,type_change,silver.customers,lakehouse_table,DEGRADES,MEDIUM,Validate the new type of 'is_active'. Add an explicit cast or update dependent calculations where necessary.
+﻿change_id,change_type,object,object_type,impact,severity,proposed_fix
+SC01,rename,bronze.crm_customers,lakehouse_table,BREAKS,HIGH,"Update references from 'email' to 'email_address' in the affected ingestion, notebook and downstream model."
+SC01,rename,nb02_silver_customers,notebook,BREAKS,HIGH,"Update references from 'email' to 'email_address' in the affected ingestion, notebook and downstream model."
+SC01,rename,silver.customers,lakehouse_table,BREAKS,HIGH,"Update references from 'email' to 'email_address' in the affected ingestion, notebook and downstream model."
+SC02,rename,Customer Segments,report,BREAKS,HIGH,"Update references from 'region_code' to 'region' in the affected ingestion, notebook and downstream model."
+SC02,rename,Customer Segments/Customer List,report_visual,BREAKS,HIGH,"Update references from 'region_code' to 'region' in the affected ingestion, notebook and downstream model."
+SC02,rename,Executive Sales,report,BREAKS,HIGH,"Update references from 'region_code' to 'region' in the affected ingestion, notebook and downstream model."
+SC02,rename,Executive Sales/Net Sales by Region,report_visual,BREAKS,HIGH,"Update references from 'region_code' to 'region' in the affected ingestion, notebook and downstream model."
+SC02,rename,bronze.crm_customers,lakehouse_table,BREAKS,HIGH,"Update references from 'region_code' to 'region' in the affected ingestion, notebook and downstream model."
+SC02,rename,dim_customer,semantic_table,BREAKS,HIGH,"Update references from 'region_code' to 'region' in the affected ingestion, notebook and downstream model."
+SC02,rename,gold.dim_customer,lakehouse_table,DEGRADES,MEDIUM,"Update references from 'region_code' to 'region' in the affected ingestion, notebook and downstream model."
+SC02,rename,nb02_silver_customers,notebook,BREAKS,HIGH,"Update references from 'region_code' to 'region' in the affected ingestion, notebook and downstream model."
+SC02,rename,nb06_gold_customer,notebook,BREAKS,HIGH,"Update references from 'region_code' to 'region' in the affected ingestion, notebook and downstream model."
+SC02,rename,silver.customers,lakehouse_table,BREAKS,HIGH,"Update references from 'region_code' to 'region' in the affected ingestion, notebook and downstream model."
+SC03,drop,bronze.erp_orders,lakehouse_table,BREAKS,HIGH,Restore 'discount_amount' or remove/update its downstream references before allowing the load.
+SC03,drop,fact_sales,semantic_table,BREAKS,HIGH,Restore 'discount_amount' or remove/update its downstream references before allowing the load.
+SC03,drop,gold.dim_product,lakehouse_table,BREAKS,HIGH,Restore 'discount_amount' or remove/update its downstream references before allowing the load.
+SC03,drop,gold.fact_sales,lakehouse_table,BREAKS,HIGH,Restore 'discount_amount' or remove/update its downstream references before allowing the load.
+SC03,drop,nb01_bronze_ingest,notebook,BREAKS,HIGH,Restore 'discount_amount' or remove/update its downstream references before allowing the load.
+SC03,drop,nb03_silver_orders,notebook,BREAKS,HIGH,Restore 'discount_amount' or remove/update its downstream references before allowing the load.
+SC03,drop,nb05_gold_sales,notebook,BREAKS,HIGH,Restore 'discount_amount' or remove/update its downstream references before allowing the load.
+SC03,drop,silver.orders,lakehouse_table,BREAKS,HIGH,Restore 'discount_amount' or remove/update its downstream references before allowing the load.
+SC04,drop,bronze.erp_orders,lakehouse_table,BREAKS,HIGH,Restore 'ship_date' or remove/update its downstream references before allowing the load.
+SC04,drop,nb01_bronze_ingest,notebook,BREAKS,HIGH,Restore 'ship_date' or remove/update its downstream references before allowing the load.
+SC05,type_change,bronze.erp_order_lines,lakehouse_table,DEGRADES,MEDIUM,Validate the new type of 'unit_price'. Add an explicit cast or update dependent calculations where necessary.
+SC05,type_change,fact_sales,semantic_table,DEGRADES,MEDIUM,Validate the new type of 'unit_price'. Add an explicit cast or update dependent calculations where necessary.
+SC05,type_change,gold.dim_product,lakehouse_table,BREAKS,HIGH,Validate the new type of 'unit_price'. Add an explicit cast or update dependent calculations where necessary.
+SC05,type_change,gold.fact_sales,lakehouse_table,BREAKS,HIGH,Validate the new type of 'unit_price'. Add an explicit cast or update dependent calculations where necessary.
+SC05,type_change,nb01_bronze_ingest,notebook,DEGRADES,MEDIUM,Validate the new type of 'unit_price'. Add an explicit cast or update dependent calculations where necessary.
+SC05,type_change,nb04_silver_order_lines,notebook,DEGRADES,MEDIUM,Validate the new type of 'unit_price'. Add an explicit cast or update dependent calculations where necessary.
+SC05,type_change,nb05_gold_sales,notebook,BREAKS,HIGH,Validate the new type of 'unit_price'. Add an explicit cast or update dependent calculations where necessary.
+SC05,type_change,silver.order_lines,lakehouse_table,BREAKS,HIGH,Validate the new type of 'unit_price'. Add an explicit cast or update dependent calculations where necessary.
+SC06,add,erp.products,source_table,NO IMPACT,NONE,No downstream change required based on the currently extracted lineage.
+SC07,add,crm.customers,source_table,NO IMPACT,NONE,No downstream change required based on the currently extracted lineage.
+SC08,type change,erp.orders,source_table,NO IMPACT,NONE,No downstream change required based on the currently extracted lineage.
+SC09,rename,bronze.erp_products,lakehouse_table,BREAKS,HIGH,"Update references from 'cost_price' to 'standard_cost' in the affected ingestion, notebook and downstream model."
+SC09,rename,fact_sales,semantic_table,BREAKS,HIGH,"Update references from 'cost_price' to 'standard_cost' in the affected ingestion, notebook and downstream model."
+SC09,rename,gold.dim_product,lakehouse_table,BREAKS,HIGH,"Update references from 'cost_price' to 'standard_cost' in the affected ingestion, notebook and downstream model."
+SC09,rename,gold.fact_sales,lakehouse_table,BREAKS,HIGH,"Update references from 'cost_price' to 'standard_cost' in the affected ingestion, notebook and downstream model."
+SC09,rename,nb05_gold_sales,notebook,BREAKS,HIGH,"Update references from 'cost_price' to 'standard_cost' in the affected ingestion, notebook and downstream model."
+SC10,type_change,bronze.crm_customers,lakehouse_table,DEGRADES,MEDIUM,Validate the new type of 'is_active'. Add an explicit cast or update dependent calculations where necessary.
+SC10,type_change,dim_customer,semantic_table,DEGRADES,MEDIUM,Validate the new type of 'is_active'. Add an explicit cast or update dependent calculations where necessary.
+SC10,type_change,gold.dim_customer,lakehouse_table,DEGRADES,MEDIUM,Validate the new type of 'is_active'. Add an explicit cast or update dependent calculations where necessary.
+SC10,type_change,nb02_silver_customers,notebook,DEGRADES,MEDIUM,Validate the new type of 'is_active'. Add an explicit cast or update dependent calculations where necessary.
+SC10,type_change,nb06_gold_customer,notebook,DEGRADES,MEDIUM,Validate the new type of 'is_active'. Add an explicit cast or update dependent calculations where necessary.
+SC10,type_change,silver.customers,lakehouse_table,DEGRADES,MEDIUM,Validate the new type of 'is_active'. Add an explicit cast or update dependent calculations where necessary.

@@ -1,7 +1,7 @@
 {
   "summary": {
     "total_changes": 10,
-    "total_impacted_objects": 39,
+    "total_impacted_objects": 42,
     "breaks": 6,
     "degrades": 1,
     "no_impact": 3,
@@ -42,7 +42,7 @@
       "impact": "BREAKS",
       "severity": "HIGH",
       "decision": "HOLD THE LOAD",
-      "affected_object_count": 7
+      "affected_object_count": 8
     },
     {
       "change_id": "SC04",
@@ -53,7 +53,7 @@
       "impact": "BREAKS",
       "severity": "HIGH",
       "decision": "HOLD THE LOAD",
-      "affected_object_count": 1
+      "affected_object_count": 2
     },
     {
       "change_id": "SC05",
@@ -64,7 +64,7 @@
       "impact": "BREAKS",
       "severity": "HIGH",
       "decision": "HOLD THE LOAD",
-      "affected_object_count": 7
+      "affected_object_count": 8
     },
     {
       "change_id": "SC06",
@@ -347,6 +347,19 @@
     {
       "change_id": "SC03",
       "change_type": "drop",
+      "object": "nb01_bronze_ingest",
+      "object_type": "notebook",
+      "impact": "BREAKS",
+      "severity": "HIGH",
+      "proposed_fix": "Restore 'discount_amount' or remove/update its downstream references before allowing the load.",
+      "evidence": "Notebook reads or references 'discount_amount'.",
+      "node_id": "notebook:nb01_bronze_ingest",
+      "dependency_kind": "direct",
+      "severity_reason": "A breaking change affects a downstream dependency."
+    },
+    {
+      "change_id": "SC03",
+      "change_type": "drop",
       "object": "nb03_silver_orders",
       "object_type": "notebook",
       "impact": "BREAKS",
@@ -393,6 +406,19 @@
       "proposed_fix": "Restore 'ship_date' or remove/update its downstream references before allowing the load.",
       "evidence": "Ingestion dependency from 'erp.orders' carries column 'ship_date'.",
       "node_id": "lakehouse_table:bronze.erp_orders",
+      "dependency_kind": "direct",
+      "severity_reason": "A breaking change affects a downstream dependency."
+    },
+    {
+      "change_id": "SC04",
+      "change_type": "drop",
+      "object": "nb01_bronze_ingest",
+      "object_type": "notebook",
+      "impact": "BREAKS",
+      "severity": "HIGH",
+      "proposed_fix": "Restore 'ship_date' or remove/update its downstream references before allowing the load.",
+      "evidence": "Notebook reads or references 'ship_date'.",
+      "node_id": "notebook:nb01_bronze_ingest",
       "dependency_kind": "direct",
       "severity_reason": "A breaking change affects a downstream dependency."
     },
@@ -447,6 +473,19 @@
       "node_id": "lakehouse_table:silver.order_lines",
       "dependency_kind": "derived",
       "severity_reason": "A breaking change affects a derived column or calculation."
+    },
+    {
+      "change_id": "SC05",
+      "change_type": "type_change",
+      "object": "nb01_bronze_ingest",
+      "object_type": "notebook",
+      "impact": "DEGRADES",
+      "severity": "MEDIUM",
+      "proposed_fix": "Validate the new type of 'unit_price'. Add an explicit cast or update dependent calculations where necessary.",
+      "evidence": "Notebook reads or references 'unit_price'.",
+      "node_id": "notebook:nb01_bronze_ingest",
+      "dependency_kind": "direct",
+      "severity_reason": "A downstream dependency may experience degraded behaviour."
     },
     {
       "change_id": "SC05",

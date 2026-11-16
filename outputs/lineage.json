@@ -119,7 +119,7 @@
       "name": "nb01_bronze_ingest",
       "type": "notebook",
       "metadata": {
-        "path": "C:/Users/AnandRaju/SDIA/starter_kit/project/notebooks/nb01_bronze_ingest.py"
+        "path": "D:/SDIA/theme07/starter_kit/project/notebooks/nb01_bronze_ingest.py"
       }
     },
     {
@@ -127,7 +127,7 @@
       "name": "nb02_silver_customers",
       "type": "notebook",
       "metadata": {
-        "path": "C:/Users/AnandRaju/SDIA/starter_kit/project/notebooks/nb02_silver_customers.py"
+        "path": "D:/SDIA/theme07/starter_kit/project/notebooks/nb02_silver_customers.py"
       }
     },
     {
@@ -135,7 +135,7 @@
       "name": "nb03_silver_orders",
       "type": "notebook",
       "metadata": {
-        "path": "C:/Users/AnandRaju/SDIA/starter_kit/project/notebooks/nb03_silver_orders.py"
+        "path": "D:/SDIA/theme07/starter_kit/project/notebooks/nb03_silver_orders.py"
       }
     },
     {
@@ -143,7 +143,7 @@
       "name": "nb04_silver_order_lines",
       "type": "notebook",
       "metadata": {
-        "path": "C:/Users/AnandRaju/SDIA/starter_kit/project/notebooks/nb04_silver_order_lines.py"
+        "path": "D:/SDIA/theme07/starter_kit/project/notebooks/nb04_silver_order_lines.py"
       }
     },
     {
@@ -151,7 +151,7 @@
       "name": "nb05_gold_sales",
       "type": "notebook",
       "metadata": {
-        "path": "C:/Users/AnandRaju/SDIA/starter_kit/project/notebooks/nb05_gold_sales.py"
+        "path": "D:/SDIA/theme07/starter_kit/project/notebooks/nb05_gold_sales.py"
       }
     },
     {
@@ -159,7 +159,7 @@
       "name": "nb06_gold_customer",
       "type": "notebook",
       "metadata": {
-        "path": "C:/Users/AnandRaju/SDIA/starter_kit/project/notebooks/nb06_gold_customer.py"
+        "path": "D:/SDIA/theme07/starter_kit/project/notebooks/nb06_gold_customer.py"
       }
     },
     {
@@ -1580,6 +1580,30 @@
       "evidence": "sales_analytics_model.json: measure 'Net Sales'"
     },
     {
+      "source": "notebook:nb01_bronze_ingest",
+      "target": "lakehouse_table:bronze.crm_customers",
+      "relationship": "writes_to",
+      "evidence": "config/ingest_config.json: nb01_bronze_ingest writes bronze.crm_customers"
+    },
+    {
+      "source": "notebook:nb01_bronze_ingest",
+      "target": "lakehouse_table:bronze.erp_order_lines",
+      "relationship": "writes_to",
+      "evidence": "config/ingest_config.json: nb01_bronze_ingest writes bronze.erp_order_lines"
+    },
+    {
+      "source": "notebook:nb01_bronze_ingest",
+      "target": "lakehouse_table:bronze.erp_orders",
+      "relationship": "writes_to",
+      "evidence": "config/ingest_config.json: nb01_bronze_ingest writes bronze.erp_orders"
+    },
+    {
+      "source": "notebook:nb01_bronze_ingest",
+      "target": "lakehouse_table:bronze.erp_products",
+      "relationship": "writes_to",
+      "evidence": "config/ingest_config.json: nb01_bronze_ingest writes bronze.erp_products"
+    },
+    {
       "source": "notebook:nb02_silver_customers",
       "target": "lakehouse_table:silver.customers",
       "relationship": "writes_to",
@@ -2254,6 +2278,13 @@
       "write_mode": "append"
     },
     {
+      "source": "source_table:crm.customers",
+      "target": "notebook:nb01_bronze_ingest",
+      "relationship": "read_by",
+      "evidence": "config/ingest_config.json: nb01_bronze_ingest reads crm.customers",
+      "columns": []
+    },
+    {
       "source": "source_table:erp.order_lines",
       "target": "lakehouse_table:bronze.erp_order_lines",
       "relationship": "ingested_to",
@@ -2268,6 +2299,20 @@
         "unit_price"
       ],
       "write_mode": "append"
+    },
+    {
+      "source": "source_table:erp.order_lines",
+      "target": "notebook:nb01_bronze_ingest",
+      "relationship": "read_by",
+      "evidence": "config/ingest_config.json: nb01_bronze_ingest reads erp.order_lines",
+      "columns": [
+        "line_amount",
+        "line_no",
+        "order_id",
+        "product_id",
+        "quantity",
+        "unit_price"
+      ]
     },
     {
       "source": "source_table:erp.orders",
@@ -2288,12 +2333,35 @@
       "write_mode": "append"
     },
     {
+      "source": "source_table:erp.orders",
+      "target": "notebook:nb01_bronze_ingest",
+      "relationship": "read_by",
+      "evidence": "config/ingest_config.json: nb01_bronze_ingest reads erp.orders",
+      "columns": [
+        "currency",
+        "customer_id",
+        "discount_amount",
+        "order_date",
+        "order_id",
+        "ship_date",
+        "status",
+        "total_amount"
+      ]
+    },
+    {
       "source": "source_table:erp.products",
       "target": "lakehouse_table:bronze.erp_products",
       "relationship": "ingested_to",
       "evidence": "config/ingest_config.json: source=erp.products; target=bronze.erp_products",
       "notebook": "nb01_bronze_ingest",
       "write_mode": "overwrite"
+    },
+    {
+      "source": "source_table:erp.products",
+      "target": "notebook:nb01_bronze_ingest",
+      "relationship": "read_by",
+      "evidence": "config/ingest_config.json: nb01_bronze_ingest reads erp.products",
+      "columns": []
     }
   ]
 }

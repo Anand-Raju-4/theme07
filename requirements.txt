@@ -1,0 +1,19 @@
+# Schema Drift Impact Analyzer — Dependencies
+
+# Core
+fastapi>=0.115.0
+uvicorn[standard]>=0.30.0
+pydantic>=2.0.0
+
+# UI
+streamlit>=1.35.0
+graphviz>=0.20.0
+
+# Data
+pandas>=2.0.0
+
+# HTTP (Streamlit → FastAPI)
+requests>=2.31.0
+
+# Testing
+pytest>=8.0.0

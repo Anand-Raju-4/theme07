@@ -21,16 +21,16 @@
   "change_results": [
     {
       "change_id": "SC01",
-      "impact": "BREAKS",
-      "severity": "HIGH",
-      "decision": "HOLD THE LOAD",
+      "impact": "DEGRADES",
+      "severity": "MEDIUM",
+      "decision": "SAFE WITH WARNING",
       "report_object_count": 3
     },
     {
       "change_id": "SC02",
-      "impact": "BREAKS",
-      "severity": "HIGH",
-      "decision": "HOLD THE LOAD",
+      "impact": "DEGRADES",
+      "severity": "MEDIUM",
+      "decision": "SAFE WITH WARNING",
       "report_object_count": 10
     },
     {

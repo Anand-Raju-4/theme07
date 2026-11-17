@@ -5,7 +5,34 @@
       "name": "bronze.crm_customers",
       "type": "lakehouse_table",
       "metadata": {
-        "layer": "bronze"
+        "layer": "bronze",
+        "ingestion_source": "crm.customers",
+        "ingestion_reader": "json",
+        "ingestion_mode": "PERMISSIVE",
+        "ingestion_schema_columns": [
+          "created_at",
+          "customer_id",
+          "email",
+          "first_name",
+          "is_active",
+          "last_name",
+          "phone",
+          "region_code",
+          "segment"
+        ],
+        "ingestion_schema_types": {
+          "customer_id": "string",
+          "first_name": "string",
+          "last_name": "string",
+          "email": "string",
+          "phone": "string",
+          "segment": "string",
+          "region_code": "string",
+          "created_at": "timestamp",
+          "is_active": "boolean"
+        },
+        "ingestion_write_mode": "append",
+        "ingestion_merge_schema": false
       }
     },
     {
@@ -13,7 +40,13 @@
       "name": "bronze.erp_order_lines",
       "type": "lakehouse_table",
       "metadata": {
-        "layer": "bronze"
+        "layer": "bronze",
+        "ingestion_source": "erp.order_lines",
+        "ingestion_reader": "jdbc",
+        "ingestion_schema_columns": [],
+        "ingestion_schema_types": {},
+        "ingestion_write_mode": "append",
+        "ingestion_merge_schema": false
       }
     },
     {
@@ -21,7 +54,13 @@
       "name": "bronze.erp_orders",
       "type": "lakehouse_table",
       "metadata": {
-        "layer": "bronze"
+        "layer": "bronze",
+        "ingestion_source": "erp.orders",
+        "ingestion_reader": "jdbc",
+        "ingestion_schema_columns": [],
+        "ingestion_schema_types": {},
+        "ingestion_write_mode": "append",
+        "ingestion_merge_schema": false
       }
     },
     {
@@ -29,7 +68,14 @@
       "name": "bronze.erp_products",
       "type": "lakehouse_table",
       "metadata": {
-        "layer": "bronze"
+        "layer": "bronze",
+        "ingestion_source": "erp.products",
+        "ingestion_reader": "jdbc",
+        "ingestion_schema_columns": [],
+        "ingestion_schema_types": {},
+        "ingestion_write_mode": "overwrite",
+        "ingestion_merge_schema": false,
+        "ingestion_overwrite_schema": true
       }
     },
     {
@@ -119,7 +165,7 @@
       "name": "nb01_bronze_ingest",
       "type": "notebook",
       "metadata": {
-        "path": "D:/SDIA/theme07/starter_kit/project/notebooks/nb01_bronze_ingest.py"
+        "path": "C:/Users/AnandRaju/SDIA/starter_kit/project/notebooks/nb01_bronze_ingest.py"
       }
     },
     {
@@ -127,7 +173,7 @@
       "name": "nb02_silver_customers",
       "type": "notebook",
       "metadata": {
-        "path": "D:/SDIA/theme07/starter_kit/project/notebooks/nb02_silver_customers.py"
+        "path": "C:/Users/AnandRaju/SDIA/starter_kit/project/notebooks/nb02_silver_customers.py"
       }
     },
     {
@@ -135,7 +181,7 @@
       "name": "nb03_silver_orders",
       "type": "notebook",
       "metadata": {
-        "path": "D:/SDIA/theme07/starter_kit/project/notebooks/nb03_silver_orders.py"
+        "path": "C:/Users/AnandRaju/SDIA/starter_kit/project/notebooks/nb03_silver_orders.py"
       }
     },
     {
@@ -143,7 +189,7 @@
       "name": "nb04_silver_order_lines",
       "type": "notebook",
       "metadata": {
-        "path": "D:/SDIA/theme07/starter_kit/project/notebooks/nb04_silver_order_lines.py"
+        "path": "C:/Users/AnandRaju/SDIA/starter_kit/project/notebooks/nb04_silver_order_lines.py"
       }
     },
     {
@@ -151,7 +197,7 @@
       "name": "nb05_gold_sales",
       "type": "notebook",
       "metadata": {
-        "path": "D:/SDIA/theme07/starter_kit/project/notebooks/nb05_gold_sales.py"
+        "path": "C:/Users/AnandRaju/SDIA/starter_kit/project/notebooks/nb05_gold_sales.py"
       }
     },
     {
@@ -159,7 +205,7 @@
       "name": "nb06_gold_customer",
       "type": "notebook",
       "metadata": {
-        "path": "D:/SDIA/theme07/starter_kit/project/notebooks/nb06_gold_customer.py"
+        "path": "C:/Users/AnandRaju/SDIA/starter_kit/project/notebooks/nb06_gold_customer.py"
       }
     },
     {
@@ -471,7 +517,35 @@
       "name": "crm.customers",
       "type": "source_table",
       "metadata": {
-        "reader": "json"
+        "reader": "json",
+        "mode": "PERMISSIVE",
+        "schema_file": "config/schemas/crm_customers.schema.json",
+        "write_mode": "append",
+        "merge_schema": false,
+        "query_is_select_star": false,
+        "schema_available": true,
+        "schema_columns": [
+          "created_at",
+          "customer_id",
+          "email",
+          "first_name",
+          "is_active",
+          "last_name",
+          "phone",
+          "region_code",
+          "segment"
+        ],
+        "schema_types": {
+          "customer_id": "string",
+          "first_name": "string",
+          "last_name": "string",
+          "email": "string",
+          "phone": "string",
+          "segment": "string",
+          "region_code": "string",
+          "created_at": "timestamp",
+          "is_active": "boolean"
+        }
       }
     },
     {
@@ -479,7 +553,21 @@
       "name": "erp.order_lines",
       "type": "source_table",
       "metadata": {
-        "reader": "jdbc"
+        "reader": "jdbc",
+        "write_mode": "append",
+        "merge_schema": false,
+        "query_columns": [
+          "line_amount",
+          "line_no",
+          "order_id",
+          "product_id",
+          "quantity",
+          "unit_price"
+        ],
+        "query_is_select_star": false,
+        "schema_available": false,
+        "schema_columns": [],
+        "schema_types": {}
       }
     },
     {
@@ -487,7 +575,23 @@
       "name": "erp.orders",
       "type": "source_table",
       "metadata": {
-        "reader": "jdbc"
+        "reader": "jdbc",
+        "write_mode": "append",
+        "merge_schema": false,
+        "query_columns": [
+          "currency",
+          "customer_id",
+          "discount_amount",
+          "order_date",
+          "order_id",
+          "ship_date",
+          "status",
+          "total_amount"
+        ],
+        "query_is_select_star": false,
+        "schema_available": false,
+        "schema_columns": [],
+        "schema_types": {}
       }
     },
     {
@@ -495,7 +599,14 @@
       "name": "erp.products",
       "type": "source_table",
       "metadata": {
-        "reader": "jdbc"
+        "reader": "jdbc",
+        "write_mode": "overwrite",
+        "merge_schema": false,
+        "overwrite_schema": true,
+        "query_is_select_star": true,
+        "schema_available": false,
+        "schema_columns": [],
+        "schema_types": {}
       }
     }
   ],
@@ -1580,30 +1691,6 @@
       "evidence": "sales_analytics_model.json: measure 'Net Sales'"
     },
     {
-      "source": "notebook:nb01_bronze_ingest",
-      "target": "lakehouse_table:bronze.crm_customers",
-      "relationship": "writes_to",
-      "evidence": "config/ingest_config.json: nb01_bronze_ingest writes bronze.crm_customers"
-    },
-    {
-      "source": "notebook:nb01_bronze_ingest",
-      "target": "lakehouse_table:bronze.erp_order_lines",
-      "relationship": "writes_to",
-      "evidence": "config/ingest_config.json: nb01_bronze_ingest writes bronze.erp_order_lines"
-    },
-    {
-      "source": "notebook:nb01_bronze_ingest",
-      "target": "lakehouse_table:bronze.erp_orders",
-      "relationship": "writes_to",
-      "evidence": "config/ingest_config.json: nb01_bronze_ingest writes bronze.erp_orders"
-    },
-    {
-      "source": "notebook:nb01_bronze_ingest",
-      "target": "lakehouse_table:bronze.erp_products",
-      "relationship": "writes_to",
-      "evidence": "config/ingest_config.json: nb01_bronze_ingest writes bronze.erp_products"
-    },
-    {
       "source": "notebook:nb02_silver_customers",
       "target": "lakehouse_table:silver.customers",
       "relationship": "writes_to",
@@ -2275,14 +2362,35 @@
       "relationship": "ingested_to",
       "evidence": "config/ingest_config.json: source=crm.customers; target=bronze.crm_customers",
       "notebook": "nb01_bronze_ingest",
-      "write_mode": "append"
-    },
-    {
-      "source": "source_table:crm.customers",
-      "target": "notebook:nb01_bronze_ingest",
-      "relationship": "read_by",
-      "evidence": "config/ingest_config.json: nb01_bronze_ingest reads crm.customers",
-      "columns": []
+      "reader": "json",
+      "mode": "PERMISSIVE",
+      "schema_file": "config/schemas/crm_customers.schema.json",
+      "schema_available": true,
+      "schema_columns": [
+        "created_at",
+        "customer_id",
+        "email",
+        "first_name",
+        "is_active",
+        "last_name",
+        "phone",
+        "region_code",
+        "segment"
+      ],
+      "schema_types": {
+        "customer_id": "string",
+        "first_name": "string",
+        "last_name": "string",
+        "email": "string",
+        "phone": "string",
+        "segment": "string",
+        "region_code": "string",
+        "created_at": "timestamp",
+        "is_active": "boolean"
+      },
+      "write_mode": "append",
+      "merge_schema": false,
+      "query_is_select_star": false
     },
     {
       "source": "source_table:erp.order_lines",
@@ -2298,21 +2406,13 @@
         "quantity",
         "unit_price"
       ],
-      "write_mode": "append"
-    },
-    {
-      "source": "source_table:erp.order_lines",
-      "target": "notebook:nb01_bronze_ingest",
-      "relationship": "read_by",
-      "evidence": "config/ingest_config.json: nb01_bronze_ingest reads erp.order_lines",
-      "columns": [
-        "line_amount",
-        "line_no",
-        "order_id",
-        "product_id",
-        "quantity",
-        "unit_price"
-      ]
+      "reader": "jdbc",
+      "schema_available": false,
+      "schema_columns": [],
+      "schema_types": {},
+      "write_mode": "append",
+      "merge_schema": false,
+      "query_is_select_star": false
     },
     {
       "source": "source_table:erp.orders",
@@ -2330,23 +2430,13 @@
         "status",
         "total_amount"
       ],
-      "write_mode": "append"
-    },
-    {
-      "source": "source_table:erp.orders",
-      "target": "notebook:nb01_bronze_ingest",
-      "relationship": "read_by",
-      "evidence": "config/ingest_config.json: nb01_bronze_ingest reads erp.orders",
-      "columns": [
-        "currency",
-        "customer_id",
-        "discount_amount",
-        "order_date",
-        "order_id",
-        "ship_date",
-        "status",
-        "total_amount"
-      ]
+      "reader": "jdbc",
+      "schema_available": false,
+      "schema_columns": [],
+      "schema_types": {},
+      "write_mode": "append",
+      "merge_schema": false,
+      "query_is_select_star": false
     },
     {
       "source": "source_table:erp.products",
@@ -2354,14 +2444,14 @@
       "relationship": "ingested_to",
       "evidence": "config/ingest_config.json: source=erp.products; target=bronze.erp_products",
       "notebook": "nb01_bronze_ingest",
-      "write_mode": "overwrite"
-    },
-    {
-      "source": "source_table:erp.products",
-      "target": "notebook:nb01_bronze_ingest",
-      "relationship": "read_by",
-      "evidence": "config/ingest_config.json: nb01_bronze_ingest reads erp.products",
-      "columns": []
+      "reader": "jdbc",
+      "schema_available": false,
+      "schema_columns": [],
+      "schema_types": {},
+      "write_mode": "overwrite",
+      "merge_schema": false,
+      "overwrite_schema": true,
+      "query_is_select_star": true
     }
   ]
 }

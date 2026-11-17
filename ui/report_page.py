@@ -75,11 +75,11 @@ def render_report_page():
 
             def color_impact(val):
                 if val == "BREAKS":
-                    return "background-color: #ffcdd2; font-weight: bold"
+                    return "background-color: #ffcdd2; font-weight: bold; color: #b71c1c"
                 elif val == "DEGRADES":
-                    return "background-color: #fff9c4"
+                    return "background-color: #fff9c4; color: #e65100"
                 elif val in {"NO IMPACT", "SAFE TO LOAD"}:
-                    return "background-color: #c8e6c9"
+                    return "background-color: #c8e6c9; color: #1b5e20"
                 return ""
 
             styled_impact = display_data[available_cols].style.map(

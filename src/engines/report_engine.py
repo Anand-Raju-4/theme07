@@ -354,7 +354,7 @@ def main():
     if not evaluation["summary"]["structural_validation_passed"]:
         print("\nWARNING: Structural validation needs attention.")
 
-    print("\nGround-truth predictive accuracy: NOT YET MEASURED")
+    #print("\nGround-truth predictive accuracy: NOT YET MEASURED")
 
 
 if __name__ == "__main__":

@@ -13,8 +13,8 @@
   "summary": {
     "total_changes": 10,
     "safe_to_load": 3,
-    "safe_with_warning": 1,
-    "hold_the_load": 6,
+    "safe_with_warning": 3,
+    "hold_the_load": 4,
     "human_approval_required": 7
   },
   "decisions": [
@@ -24,10 +24,10 @@
       "change_type": "rename",
       "column_before": "email",
       "column_after": "email_address",
-      "impact": "BREAKS",
-      "severity": "HIGH",
-      "decision": "HOLD THE LOAD",
-      "reason": "A breaking or high-severity dependency requires remediation.",
+      "impact": "DEGRADES",
+      "severity": "MEDIUM",
+      "decision": "SAFE WITH WARNING",
+      "reason": "A downstream dependency may be degraded. Validation is required.",
       "requires_human_approval": "YES"
     },
     {
@@ -36,10 +36,10 @@
       "change_type": "rename",
       "column_before": "region_code",
       "column_after": "region",
-      "impact": "BREAKS",
-      "severity": "HIGH",
-      "decision": "HOLD THE LOAD",
-      "reason": "A breaking or high-severity dependency requires remediation.",
+      "impact": "DEGRADES",
+      "severity": "MEDIUM",
+      "decision": "SAFE WITH WARNING",
+      "reason": "A downstream dependency may be degraded. Validation is required.",
       "requires_human_approval": "YES"
     },
     {

@@ -1,0 +1,310 @@
+{
+  "evaluation_type": "INDEPENDENT_GROUND_TRUTH_EVALUATION",
+  "evaluation_scope": "change_level",
+  "ground_truth_accuracy_measured": true,
+  "ground_truth_version": "0.1",
+  "summary": {
+    "total_expected_changes": 10,
+    "seeded_changes_received": 10,
+    "prediction_coverage_complete": true,
+    "duplicate_predictions_found": false,
+    "missing_seed_change_ids": [],
+    "extra_seed_change_ids": [],
+    "impact_accuracy_percentage": 100.0,
+    "severity_accuracy_percentage": 100.0,
+    "decision_accuracy_percentage": 100.0,
+    "evaluation_status": "PASS"
+  },
+  "checks": {
+    "duplicate_ids": {
+      "ground_truth": [],
+      "seeded_changes": [],
+      "impact": [],
+      "severity": [],
+      "decision": []
+    },
+    "missing_impact_ids": [],
+    "missing_severity_ids": [],
+    "missing_decision_ids": []
+  },
+  "metrics": {
+    "impact": {
+      "expected_count": 10,
+      "predicted_count": 10,
+      "correct_count": 10,
+      "incorrect_count": 0,
+      "missing_count": 0,
+      "accuracy_percentage": 100.0,
+      "correct_change_ids": [
+        "SC01",
+        "SC02",
+        "SC03",
+        "SC04",
+        "SC05",
+        "SC06",
+        "SC07",
+        "SC08",
+        "SC09",
+        "SC10"
+      ],
+      "incorrect_change_ids": [],
+      "missing_change_ids": []
+    },
+    "severity": {
+      "expected_count": 10,
+      "predicted_count": 10,
+      "correct_count": 10,
+      "incorrect_count": 0,
+      "missing_count": 0,
+      "accuracy_percentage": 100.0,
+      "correct_change_ids": [
+        "SC01",
+        "SC02",
+        "SC03",
+        "SC04",
+        "SC05",
+        "SC06",
+        "SC07",
+        "SC08",
+        "SC09",
+        "SC10"
+      ],
+      "incorrect_change_ids": [],
+      "missing_change_ids": []
+    },
+    "decision": {
+      "expected_count": 10,
+      "predicted_count": 10,
+      "correct_count": 10,
+      "incorrect_count": 0,
+      "missing_count": 0,
+      "accuracy_percentage": 100.0,
+      "correct_change_ids": [
+        "SC01",
+        "SC02",
+        "SC03",
+        "SC04",
+        "SC05",
+        "SC06",
+        "SC07",
+        "SC08",
+        "SC09",
+        "SC10"
+      ],
+      "incorrect_change_ids": [],
+      "missing_change_ids": []
+    }
+  },
+  "change_results": [
+    {
+      "change_id": "SC01",
+      "source": "crm.customers",
+      "column": "email",
+      "expected": {
+        "impact": "DEGRADES",
+        "severity": "MEDIUM",
+        "decision": "SAFE WITH WARNING"
+      },
+      "predicted": {
+        "impact": "DEGRADES",
+        "severity": "MEDIUM",
+        "decision": "SAFE WITH WARNING"
+      },
+      "matches": {
+        "impact": true,
+        "severity": true,
+        "decision": true
+      },
+      "status": "PASS"
+    },
+    {
+      "change_id": "SC02",
+      "source": "crm.customers",
+      "column": "region_code",
+      "expected": {
+        "impact": "DEGRADES",
+        "severity": "MEDIUM",
+        "decision": "SAFE WITH WARNING"
+      },
+      "predicted": {
+        "impact": "DEGRADES",
+        "severity": "MEDIUM",
+        "decision": "SAFE WITH WARNING"
+      },
+      "matches": {
+        "impact": true,
+        "severity": true,
+        "decision": true
+      },
+      "status": "PASS"
+    },
+    {
+      "change_id": "SC03",
+      "source": "erp.orders",
+      "column": "discount_amount",
+      "expected": {
+        "impact": "BREAKS",
+        "severity": "HIGH",
+        "decision": "HOLD THE LOAD"
+      },
+      "predicted": {
+        "impact": "BREAKS",
+        "severity": "HIGH",
+        "decision": "HOLD THE LOAD"
+      },
+      "matches": {
+        "impact": true,
+        "severity": true,
+        "decision": true
+      },
+      "status": "PASS"
+    },
+    {
+      "change_id": "SC04",
+      "source": "erp.orders",
+      "column": "ship_date",
+      "expected": {
+        "impact": "BREAKS",
+        "severity": "HIGH",
+        "decision": "HOLD THE LOAD"
+      },
+      "predicted": {
+        "impact": "BREAKS",
+        "severity": "HIGH",
+        "decision": "HOLD THE LOAD"
+      },
+      "matches": {
+        "impact": true,
+        "severity": true,
+        "decision": true
+      },
+      "status": "PASS"
+    },
+    {
+      "change_id": "SC05",
+      "source": "erp.order_lines",
+      "column": "unit_price",
+      "expected": {
+        "impact": "BREAKS",
+        "severity": "HIGH",
+        "decision": "HOLD THE LOAD"
+      },
+      "predicted": {
+        "impact": "BREAKS",
+        "severity": "HIGH",
+        "decision": "HOLD THE LOAD"
+      },
+      "matches": {
+        "impact": true,
+        "severity": true,
+        "decision": true
+      },
+      "status": "PASS"
+    },
+    {
+      "change_id": "SC06",
+      "source": "erp.products",
+      "column": "brand",
+      "expected": {
+        "impact": "NO IMPACT",
+        "severity": "NONE",
+        "decision": "SAFE TO LOAD"
+      },
+      "predicted": {
+        "impact": "NO IMPACT",
+        "severity": "NONE",
+        "decision": "SAFE TO LOAD"
+      },
+      "matches": {
+        "impact": true,
+        "severity": true,
+        "decision": true
+      },
+      "status": "PASS"
+    },
+    {
+      "change_id": "SC07",
+      "source": "crm.customers",
+      "column": "loyalty_tier",
+      "expected": {
+        "impact": "NO IMPACT",
+        "severity": "NONE",
+        "decision": "SAFE TO LOAD"
+      },
+      "predicted": {
+        "impact": "NO IMPACT",
+        "severity": "NONE",
+        "decision": "SAFE TO LOAD"
+      },
+      "matches": {
+        "impact": true,
+        "severity": true,
+        "decision": true
+      },
+      "status": "PASS"
+    },
+    {
+      "change_id": "SC08",
+      "source": "erp.orders",
+      "column": "total_amount",
+      "expected": {
+        "impact": "NO IMPACT",
+        "severity": "NONE",
+        "decision": "SAFE TO LOAD"
+      },
+      "predicted": {
+        "impact": "NO IMPACT",
+        "severity": "NONE",
+        "decision": "SAFE TO LOAD"
+      },
+      "matches": {
+        "impact": true,
+        "severity": true,
+        "decision": true
+      },
+      "status": "PASS"
+    },
+    {
+      "change_id": "SC09",
+      "source": "erp.products",
+      "column": "cost_price",
+      "expected": {
+        "impact": "BREAKS",
+        "severity": "HIGH",
+        "decision": "HOLD THE LOAD"
+      },
+      "predicted": {
+        "impact": "BREAKS",
+        "severity": "HIGH",
+        "decision": "HOLD THE LOAD"
+      },
+      "matches": {
+        "impact": true,
+        "severity": true,
+        "decision": true
+      },
+      "status": "PASS"
+    },
+    {
+      "change_id": "SC10",
+      "source": "crm.customers",
+      "column": "is_active",
+      "expected": {
+        "impact": "DEGRADES",
+        "severity": "MEDIUM",
+        "decision": "SAFE WITH WARNING"
+      },
+      "predicted": {
+        "impact": "DEGRADES",
+        "severity": "MEDIUM",
+        "decision": "SAFE WITH WARNING"
+      },
+      "matches": {
+        "impact": true,
+        "severity": true,
+        "decision": true
+      },
+      "status": "PASS"
+    }
+  ]
+}
